@@ -1,0 +1,16 @@
+
+query productList($id_list:[ID!]) {
+      product_list(
+        id_list: $id_list
+       ) {
+           item_list{
+            id
+            name_ko
+            name_en
+            price
+            supplier{
+              name
+            }
+          }
+        }
+}
