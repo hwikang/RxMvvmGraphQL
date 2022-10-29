@@ -32,8 +32,6 @@ class Network {
 
     }()
 }
-
-
 class UUIDInterceptor: ApolloInterceptor {
   
     let uuid: String
@@ -41,14 +39,13 @@ class UUIDInterceptor: ApolloInterceptor {
         self.uuid = uuid
     }
     
-    func interceptAsync<Operation>(chain: RequestChain, request: HTTPRequest<Operation>, response: HTTPResponse<Operation>?, completion: @escaping (Result<GraphQLResult<Operation.Data>, Error>) -> Void) where Operation : GraphQLOperation {
+    func interceptAsync<Operation>(chain: RequestChain, request: HTTPRequest<Operation>, response: HTTPResponse<Operation>?, completion: @escaping (Result<GraphQLResult<Operation.Data>, Error>) -> Void) where Operation: GraphQLOperation {
         
         request.addHeader(name: "Croquis-UUID", value: self.uuid)
         chain.proceedAsync(request: request, response: response, completion: completion)
     }
     
 }
-
 
 class NetworkInterceptorsProvider: DefaultInterceptorProvider {
     let interceptors: [ApolloInterceptor]
@@ -57,7 +54,7 @@ class NetworkInterceptorsProvider: DefaultInterceptorProvider {
         super.init(store: store)
     }
     
-    override func interceptors<Operation>(for operation: Operation) -> [ApolloInterceptor] where Operation : GraphQLOperation {
+    override func interceptors<Operation>(for operation: Operation) -> [ApolloInterceptor] where Operation: GraphQLOperation {
         var superInterceptors = super.interceptors(for: operation)
         self.interceptors.forEach { interceptor in
             superInterceptors.insert(interceptor, at: 0)
