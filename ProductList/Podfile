@@ -9,6 +9,7 @@ target 'ProductList' do
 
 
   pod 'Apollo', '~> 0.53.0'
+  pod 'SwiftLint'
 
   target 'ProductListTests' do
     inherit! :search_paths

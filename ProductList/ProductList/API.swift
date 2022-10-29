@@ -4,6 +4,144 @@
 import Apollo
 import Foundation
 
+/// createProduct의 입력
+public struct CreateProductInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  /// - Parameters:
+  ///   - supplierId: 공급사 ID
+  ///   - nameKo: 한국어 상품명
+  ///   - price: 가격
+  public init(supplierId: GraphQLID, nameKo: String, price: Int) {
+    graphQLMap = ["supplier_id": supplierId, "name_ko": nameKo, "price": price]
+  }
+
+  /// 공급사 ID
+  public var supplierId: GraphQLID {
+    get {
+      return graphQLMap["supplier_id"] as! GraphQLID
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "supplier_id")
+    }
+  }
+
+  /// 한국어 상품명
+  public var nameKo: String {
+    get {
+      return graphQLMap["name_ko"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "name_ko")
+    }
+  }
+
+  /// 가격
+  public var price: Int {
+    get {
+      return graphQLMap["price"] as! Int
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "price")
+    }
+  }
+}
+
+public final class CreateProductMutation: GraphQLMutation {
+  /// The raw GraphQL definition of this operation.
+  public let operationDefinition: String =
+    """
+    mutation createProduct($input: CreateProductInput!) {
+      createProduct(input: $input) {
+        __typename
+        id
+      }
+    }
+    """
+
+  public let operationName: String = "createProduct"
+
+  public var input: CreateProductInput
+
+  public init(input: CreateProductInput) {
+    self.input = input
+  }
+
+  public var variables: GraphQLMap? {
+    return ["input": input]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes: [String] = ["Mutation"]
+
+    public static var selections: [GraphQLSelection] {
+      return [
+        GraphQLField("createProduct", arguments: ["input": GraphQLVariable("input")], type: .nonNull(.object(CreateProduct.selections))),
+      ]
+    }
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(createProduct: CreateProduct) {
+      self.init(unsafeResultMap: ["__typename": "Mutation", "createProduct": createProduct.resultMap])
+    }
+
+    /// 상품을 생성한다
+    public var createProduct: CreateProduct {
+      get {
+        return CreateProduct(unsafeResultMap: resultMap["createProduct"]! as! ResultMap)
+      }
+      set {
+        resultMap.updateValue(newValue.resultMap, forKey: "createProduct")
+      }
+    }
+
+    public struct CreateProduct: GraphQLSelectionSet {
+      public static let possibleTypes: [String] = ["Product"]
+
+      public static var selections: [GraphQLSelection] {
+        return [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        ]
+      }
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(id: GraphQLID) {
+        self.init(unsafeResultMap: ["__typename": "Product", "id": id])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// 기본 키
+      public var id: GraphQLID {
+        get {
+          return resultMap["id"]! as! GraphQLID
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "id")
+        }
+      }
+    }
+  }
+}
+
 public final class ProductListQuery: GraphQLQuery {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition: String =
