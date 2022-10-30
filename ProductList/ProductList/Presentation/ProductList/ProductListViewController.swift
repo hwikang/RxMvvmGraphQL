@@ -60,7 +60,7 @@ final class ProductListViewController: UIViewController, UITableViewDelegate {
         createButton.rx.tap.bind {
             let popupView = CreatePopupView()
             popupView.show()
-        }
+        }.disposed(by: disposeBag)
     }
 }
 
