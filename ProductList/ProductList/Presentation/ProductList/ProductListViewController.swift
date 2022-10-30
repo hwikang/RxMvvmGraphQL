@@ -10,9 +10,8 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-final class ProductListViewController: UIViewController, UITableViewDelegate{
+final class ProductListViewController: UIViewController, UITableViewDelegate {
    
-
     // MARK: - Property
     private let disposeBag = DisposeBag()
     private let viewModel = ProductListViewModel(dataSource: ProductDataSourceImpl())
@@ -27,7 +26,6 @@ final class ProductListViewController: UIViewController, UITableViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         self.view.backgroundColor = .red
         
         setUI()

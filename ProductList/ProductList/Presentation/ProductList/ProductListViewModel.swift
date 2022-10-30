@@ -33,7 +33,6 @@ final class ProductListViewModel {
             switch fetchResult {
             case .success(let result):
                 if let fetchList = result.data?.productList.itemList {
-                    print("onNext \(fetchList)")
                     self?.productList.onNext(fetchList)
                 }
             case .failure(let error):

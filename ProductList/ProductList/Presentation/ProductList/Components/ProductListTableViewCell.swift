@@ -8,13 +8,10 @@
 import Foundation
 import UIKit
 
-
 final class ProductListTableViewCell: UITableViewCell {
-//    목록에서는 ID, 한국어 상품명, 영어 상품명, 가격, 공급사를 표시합니다.
 
     private lazy var idLabel: UILabel = {
         let label = UILabel()
-//        label.textColor = .black
         return label
     }()
     private lazy var nameLabel: UILabel = {
@@ -65,7 +62,6 @@ final class ProductListTableViewCell: UITableViewCell {
     
     public func configure(id: String, nameKo: String?, nameEn: String?, price: Int?, supplier: String?) {
         idLabel.text = "ID: \(id)"
-        
         nameLabel.text = "\(nameKo ?? "") \(nameEn ?? "")"
         priceLabel.text = "\(price ?? 0) 원"
         supplierLabel.text = supplier
