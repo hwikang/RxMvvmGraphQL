@@ -39,10 +39,11 @@ final class ProductListViewController: UIViewController, UITableViewDelegate {
         
         output.productList
             .retry(3)
+            .catchAndReturn([])
             .bind(to: productListTableView.rx.items(cellIdentifier: "ProductListCell", cellType: ProductListTableViewCell.self)) { (_, element, cell) in
-                print("element \(element)")
                 cell.configure(id: element.id, nameKo: element.nameKo, nameEn: element.nameEn, price: element.price, supplier: element.supplier?.name)
             }
+            
             .disposed(by: disposeBag)
     }
 }
