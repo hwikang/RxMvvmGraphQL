@@ -8,7 +8,7 @@
 import Foundation
 import Apollo
 
-class Network {
+final class Network {
     static let shared = Network()
     
     private(set) lazy var apollo: ApolloClient = {
@@ -32,7 +32,7 @@ class Network {
 
     }()
 }
-class UUIDInterceptor: ApolloInterceptor {
+final class UUIDInterceptor: ApolloInterceptor {
   
     let uuid: String
     init(uuid: String) {
@@ -47,7 +47,7 @@ class UUIDInterceptor: ApolloInterceptor {
     
 }
 
-class NetworkInterceptorsProvider: DefaultInterceptorProvider {
+final class NetworkInterceptorsProvider: DefaultInterceptorProvider {
     let interceptors: [ApolloInterceptor]
     init(interceptors: [ApolloInterceptor], store: ApolloStore) {
         self.interceptors = interceptors

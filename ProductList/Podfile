@@ -10,7 +10,9 @@ target 'ProductList' do
 
   pod 'Apollo', '~> 0.53.0'
   pod 'SwiftLint'
-
+  pod 'SnapKit'
+  pod 'RxSwift'
+  pod 'RxCocoa'
   target 'ProductListTests' do
     inherit! :search_paths
     # Pods for testing
