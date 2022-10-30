@@ -24,12 +24,21 @@ final class ProductListViewController: UIViewController, UITableViewDelegate {
         return tableView
     }()
     
+    lazy var createButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("생성", for: .normal)
+//        button.layer.zPosition = 1
+        button.backgroundColor = .systemBlue
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .red
         
         setUI()
         bindViewModel()
+        bindView()
         viewModel.fetchProductList()
     }
     
@@ -46,17 +55,30 @@ final class ProductListViewController: UIViewController, UITableViewDelegate {
             
             .disposed(by: disposeBag)
     }
+    
+    func bindView() {
+        createButton.rx.tap.bind {
+            let popupView = CreatePopupView()
+            popupView.show()
+        }
+    }
 }
 
 extension ProductListViewController {
     func setUI() {
         self.view.addSubview(productListTableView)
+        self.view.addSubview(createButton)
         setConstraint()
     }
     
     func setConstraint() {
         productListTableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        createButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(-10)
+            make.width.height.equalTo(60)
         }
     }
 }
