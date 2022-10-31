@@ -27,7 +27,6 @@ final class ProductListViewController: UIViewController, UITableViewDelegate {
     lazy var createButton: UIButton = {
         let button = UIButton()
         button.setTitle("생성", for: .normal)
-//        button.layer.zPosition = 1
         button.backgroundColor = .systemBlue
         return button
     }()
@@ -59,7 +58,7 @@ final class ProductListViewController: UIViewController, UITableViewDelegate {
     func bindView() {
         createButton.rx.tap.bind {
             let popupView = CreatePopupView()
-            popupView.show()
+            popupView.show(parentView: self.view)
         }.disposed(by: disposeBag)
     }
 }
