@@ -15,10 +15,10 @@ struct CreatePopupSize {
     static let height = 300
 }
 
-final class CreatePopupView: UIView, UITextFieldDelegate {
+final class CreatePopupView: UIView {
     private let disposeBag = DisposeBag()
     private let viewModel = CreatePopupViewModel(dataSource: ProductDataSourceImpl())
-
+    
     // MARK: - UI
     private let popup: UIView = {
        let view = UIView()
@@ -79,6 +79,7 @@ final class CreatePopupView: UIView, UITextFieldDelegate {
         setUI()
         setEvent()
         bindViewModel()
+        bindView()
         viewModel.fetchSupplier()
     }
     
@@ -107,6 +108,27 @@ final class CreatePopupView: UIView, UITextFieldDelegate {
         
     }
     
+    private func bindView() {
+        createButton.rx.tap.bind { [weak self] in
+            guard let self = self else { return }
+            if self.isValidText() {
+            }
+        }.disposed(by: disposeBag)
+    }
+    
+    private func isValidText() -> Bool {
+        if Validator.isEmpty(nameTextField.text) {
+            print("Empty Name")
+            return false
+        }
+        if Validator.isEmpty(priceTextField.text) {
+            print("Empty Price")
+            return false
+        }
+        return true
+    }
+    
+    
     private func setDismissKeyboardEvent() {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.addGestureRecognizer(gesture)
@@ -134,7 +156,7 @@ final class CreatePopupView: UIView, UITextFieldDelegate {
     
 }
 
-extension CreatePopupView {
+extension CreatePopupView: UITextFieldDelegate {
     private func setUI() {
         addSubview(popup)
         popup.addSubview(closeButton)
@@ -145,6 +167,9 @@ extension CreatePopupView {
         popup.addSubview(supplierLabel)
         popup.addSubview(suppliersSegmentControl)
         popup.addSubview(createButton)
+        
+        nameTextField.delegate = self
+        priceTextField.delegate = self
         self.backgroundColor = .black.withAlphaComponent(0.8)
         setConstraint()
     }
@@ -194,4 +219,18 @@ extension CreatePopupView {
         }
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        print("textFieldDidEndEditing")
+    }
+    
+}
+
+
+final class Validator {
+    static func isEmpty(_ value: String?) -> Bool {
+        if let value = value {
+            return value.isEmpty
+        }
+        return true
+    }
 }
