@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import Apollo
 
-final class ProductListViewController: UIViewController, UITableViewDelegate {
+final class ProductListViewController: UIViewController, UITableViewDelegate, CreatePopupDeleate {
    
     private let disposeBag = DisposeBag()
     private let viewModel = ProductListViewModel(dataSource: ProductDataSourceImpl())
@@ -39,18 +39,13 @@ final class ProductListViewController: UIViewController, UITableViewDelegate {
         bindView()
     }
     
-    func bindViewModel() {
+    private func bindViewModel() {
         let input = ProductListViewModel.Input(needUpdateList: needUpdateList.asObservable())
         let output = viewModel.transform(input: input)
         
         output.productList
-            .retry(3)
             .catch({ error in
-                if error is GraphQLError {
-                    print("GraphQLError \(error.localizedDescription)")
-                } else{
-                    print("NetworkError \(error.localizedDescription)")
-                }
+                self.present(Dialog.getDialog(title: "에러", message: error.localizedDescription), animated: true)
                 return Observable.just([])
             })
             .bind(to: productListTableView.rx.items(cellIdentifier: "ProductListCell", cellType: ProductListTableViewCell.self)) { (_, element, cell) in
@@ -60,24 +55,29 @@ final class ProductListViewController: UIViewController, UITableViewDelegate {
             .disposed(by: disposeBag)
     }
     
-    func bindView() {
+    private func bindView() {
         createButton.rx.tap.bind {
             let popupVC = CreatePopupViewController()
             popupVC.delegate = self
             self.present(popupVC, animated: true)
         }.disposed(by: disposeBag)
     }
+    
+    
+    func onCreateDone() {
+        needUpdateList.onNext(true)
+    }
 }
 
-extension ProductListViewController: CreatePopupDeleate {
+extension ProductListViewController {
     
-    func setUI() {
+    private func setUI() {
         self.view.addSubview(productListTableView)
         self.view.addSubview(createButton)
         setConstraint()
     }
     
-    func setConstraint() {
+    private func setConstraint() {
         productListTableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -88,8 +88,5 @@ extension ProductListViewController: CreatePopupDeleate {
         }
     }
     
-    func onCreateDone() {
-        needUpdateList.onNext(true)
-    }
 
 }

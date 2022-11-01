@@ -63,7 +63,6 @@ final class CreatePopupViewModel {
                 }
                 self?.createDone.onNext(true)
             case .failure(let error):
-                print(error)
                 self?.createDone.onError(error)
 
             }

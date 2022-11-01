@@ -39,12 +39,7 @@ final class CreatePopupViewController: UIViewController {
         
         output.supplierList
             .catch { error in
-                if let error = error as? GraphQLError {
-                    print("GraphQLError \(error.localizedDescription)")
-                    
-                } else {
-                    print("NetworkError \(error.localizedDescription)")
-                }
+                self.present(Dialog.getDialog(title: "에러", message: error.localizedDescription), animated: true)
                 return Observable.just([])
             }
             .bind(onNext: {[weak self] itemList in
@@ -59,11 +54,8 @@ final class CreatePopupViewController: UIViewController {
         
         output.createDone
             .catch { error in
-                if error is GraphQLError {
-                    print("GraphQLError \(error.localizedDescription)")
-                } else {
-                    print("NetworkError \(error.localizedDescription)")
-                }
+                self.present(Dialog.getDialog(title: "에러", message: error.localizedDescription), animated: true)
+
                 return Observable.just(false)
             }
             .bind(onNext: {[weak self] isDone in
@@ -87,7 +79,7 @@ final class CreatePopupViewController: UIViewController {
             let selectedSupplierIndex = self.popup.suppliersSegmentControl.selectedSegmentIndex
             guard let supplierId = self.getSupplierIdByIndex(selectedSupplierIndex) else { return }
 
-            let input = CreateProductInput(supplierId: supplierId, nameKo: nameText, price: price)
+            let input = CreateProductInput(supplierId: "supplierId", nameKo: nameText, price: price)
             self.createProductInput.onNext(input)
             
         }.disposed(by: disposeBag)
@@ -99,11 +91,11 @@ final class CreatePopupViewController: UIViewController {
     
     private func isValidText(priceText: String, nameText: String) -> Bool {
         if Validator.isEmpty(nameText) {
-            print("Empty Name")
+            self.present(Dialog.getDialog(title: "입력", message: "이름을 입력해주세요."), animated: true)
             return false
         }
         if Validator.isEmpty(priceText) {
-            print("Empty Price")
+            self.present(Dialog.getDialog(title: "입력", message: "가격을 입력해주세요."), animated: true)
             return false
         }
        
@@ -142,14 +134,4 @@ extension CreatePopupViewController {
             make.center.equalToSuperview()
         }
     }
-}
-
-final class Validator {
-    static func isEmpty(_ value: String?) -> Bool {
-        if let value = value {
-            return value.isEmpty
-        }
-        return true
-    }
-    
 }

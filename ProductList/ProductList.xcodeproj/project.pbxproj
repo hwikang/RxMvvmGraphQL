@@ -27,6 +27,8 @@
 		BF7FADB8290E8EA7004109A4 /* ProductListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADB7290E8EA7004109A4 /* ProductListTableViewCell.swift */; };
 		BF7FADBB290EA393004109A4 /* CreatePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADBA290EA393004109A4 /* CreatePopupViewController.swift */; };
 		BF7FADBE2910BD8E004109A4 /* CreatePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADBD2910BD8E004109A4 /* CreatePopupView.swift */; };
+		BF7FADC12910F3AB004109A4 /* Dialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADC02910F3AB004109A4 /* Dialog.swift */; };
+		BF7FADC32910F609004109A4 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADC22910F609004109A4 /* Validator.swift */; };
 		BF98B41C290D13FC0058D155 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = BF98B41B290D13FC0058D155 /* .swiftlint.yml */; };
 		BF98B41E290D1BD40058D155 /* ProductListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98B41D290D1BD40058D155 /* ProductListViewModel.swift */; };
 		BF98B420290D1C300058D155 /* ProductDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98B41F290D1C300058D155 /* ProductDataSource.swift */; };
@@ -80,6 +82,8 @@
 		BF7FADB7290E8EA7004109A4 /* ProductListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListTableViewCell.swift; sourceTree = "<group>"; };
 		BF7FADBA290EA393004109A4 /* CreatePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePopupViewController.swift; sourceTree = "<group>"; };
 		BF7FADBD2910BD8E004109A4 /* CreatePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePopupView.swift; sourceTree = "<group>"; };
+		BF7FADC02910F3AB004109A4 /* Dialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialog.swift; sourceTree = "<group>"; };
+		BF7FADC22910F609004109A4 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		BF98B41B290D13FC0058D155 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		BF98B41D290D1BD40058D155 /* ProductListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewModel.swift; sourceTree = "<group>"; };
 		BF98B41F290D1C300058D155 /* ProductDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDataSource.swift; sourceTree = "<group>"; };
@@ -234,9 +238,19 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		BF7FADBF2910F37F004109A4 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BF7FADC02910F3AB004109A4 /* Dialog.swift */,
+				BF7FADC22910F609004109A4 /* Validator.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		BF98B417290D12470058D155 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				BF7FADBF2910F37F004109A4 /* Common */,
 				BF7FADB9290EA327004109A4 /* CreateProduct */,
 				BF98B419290D12730058D155 /* ProductList */,
 				BF98B418290D12690058D155 /* Launch */,
@@ -567,7 +581,9 @@
 			files = (
 				BF98B420290D1C300058D155 /* ProductDataSource.swift in Sources */,
 				7BFB9535290BC23C00C6DDBA /* SupplierListQuery.graphql in Sources */,
+				BF7FADC12910F3AB004109A4 /* Dialog.swift in Sources */,
 				7BB89FBD290F6748006AE903 /* CreatePopupViewModel.swift in Sources */,
+				BF7FADC32910F609004109A4 /* Validator.swift in Sources */,
 				7BFB9533290BB92A00C6DDBA /* Network.swift in Sources */,
 				BF7FADBB290EA393004109A4 /* CreatePopupViewController.swift in Sources */,
 				BF98B41E290D1BD40058D155 /* ProductListViewModel.swift in Sources */,
