@@ -14,9 +14,9 @@ final class Network {
     private(set) lazy var apollo: ApolloClient = {
         guard let url = URL(string: "https://test.recruit.croquis.com:28501"),
         let uuid = UIDevice.current.identifierForVendor?.uuidString else { fatalError("Create Apollo Client Error")}
-        
-        let configuration = URLSessionConfiguration.default
 
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 5
         let uuidHeader = ["Croquis-UUID": uuid]
         configuration.httpAdditionalHeaders = uuidHeader
         print("uuidHeader \(uuidHeader)")
