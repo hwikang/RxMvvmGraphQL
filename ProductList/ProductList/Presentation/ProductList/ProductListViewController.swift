@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Apollo
 
 final class ProductListViewController: UIViewController, UITableViewDelegate {
    
@@ -44,7 +45,14 @@ final class ProductListViewController: UIViewController, UITableViewDelegate {
         
         output.productList
             .retry(3)
-            .catchAndReturn([])
+            .catch({ error in
+                if error is GraphQLError {
+                    print("GraphQLError \(error.localizedDescription)")
+                } else{
+                    print("NetworkError \(error.localizedDescription)")
+                }
+                return Observable.just([])
+            })
             .bind(to: productListTableView.rx.items(cellIdentifier: "ProductListCell", cellType: ProductListTableViewCell.self)) { (_, element, cell) in
                 cell.configure(id: element.id, nameKo: element.nameKo, nameEn: element.nameEn, price: element.price, supplier: element.supplier?.name)
             }

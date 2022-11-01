@@ -8,19 +8,19 @@
 import Foundation
 import RxSwift
 import RxCocoa
-
+import Apollo
 final class CreatePopupViewModel {
     private let disposeBag = DisposeBag()
     private let dataSource: ProductDataSource
     private let supplierList = PublishSubject<[SupplierListQuery.Data.SupplierList.ItemList]?>()
-    private let createDone = PublishRelay<Bool>()
+    private let createDone = PublishSubject<Bool>()
 
     struct Input {
         let createInput: Observable<CreateProductInput>
     }
     struct Output {
         let supplierList: Observable<[SupplierListQuery.Data.SupplierList.ItemList]?>
-        let createDone: Driver<Bool>
+        let createDone: Observable<Bool>
         
     }
     init(dataSource: ProductDataSource) {
@@ -33,7 +33,7 @@ final class CreatePopupViewModel {
             self?.createProduct(input: input)
         }.disposed(by: disposeBag)
         return Output(supplierList: supplierList.asObservable(),
-                      createDone: createDone.asDriver(onErrorJustReturn: false)
+                      createDone: createDone.asObservable()
         )
     }
     
@@ -41,10 +41,13 @@ final class CreatePopupViewModel {
         dataSource.fetchSuppliers {[weak self] fetchResult in
             switch fetchResult {
             case .success(let result):
+                if let error = result.errors?.first as? Error {
+                    self?.supplierList.onError(error)
+                    return
+                }
                 let list = result.data?.supplierList.itemList
                 self?.supplierList.onNext(list)
             case .failure(let error):
-                print(error)
                 self?.supplierList.onError(error)
             }
         }
@@ -54,11 +57,14 @@ final class CreatePopupViewModel {
         dataSource.createProduct(input: input) {[weak self] mutateResult in
             switch mutateResult {
             case .success(let result):
-                self?.createDone.accept(true)
-                print(result.data?.createProduct.id)
+                if let error = result.errors?.first as? Error {
+                    self?.createDone.onError(error)
+                    return
+                }
+                self?.createDone.onNext(true)
             case .failure(let error):
                 print(error)
-                self?.createDone.accept(false)
+                self?.createDone.onError(error)
 
             }
         }

@@ -5,11 +5,10 @@
 //  Created by 슈퍼 on 2022/10/30.
 //
 
-import Foundation
 import UIKit
 import RxSwift
 import RxRelay
-
+import Apollo
 protocol CreatePopupDeleate {
     func onCreateDone()
 }
@@ -20,6 +19,7 @@ final class CreatePopupViewController: UIViewController {
     private let createProductInput = PublishSubject<CreateProductInput>()
     private var supplierList: [SupplierListQuery.Data.SupplierList.ItemList]?
     public var delegate: CreatePopupDeleate?
+    
     private let popup: CreatePopupView = {
        let view = CreatePopupView()
         view.backgroundColor = .white
@@ -38,8 +38,15 @@ final class CreatePopupViewController: UIViewController {
         let output = viewModel.transform(input: input)
         
         output.supplierList
-            .retry(3)
-            .catchAndReturn([])
+            .catch { error in
+                if let error = error as? GraphQLError {
+                    print("GraphQLError \(error.localizedDescription)")
+                    
+                } else {
+                    print("NetworkError \(error.localizedDescription)")
+                }
+                return Observable.just([])
+            }
             .bind(onNext: {[weak self] itemList in
                 guard let itemList = itemList else { return }
                 self?.supplierList = itemList
@@ -50,12 +57,21 @@ final class CreatePopupViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        output.createDone.drive {[weak self] isDone in
-            self?.delegate?.onCreateDone()
-            self?.dismiss(animated: true)
-        }.disposed(by: disposeBag)
-
-        
+        output.createDone
+            .catch { error in
+                if error is GraphQLError {
+                    print("GraphQLError \(error.localizedDescription)")
+                } else {
+                    print("NetworkError \(error.localizedDescription)")
+                }
+                return Observable.just(false)
+            }
+            .bind(onNext: {[weak self] isDone in
+            if isDone {
+                self?.delegate?.onCreateDone()
+                self?.dismiss(animated: true)
+            }
+        }).disposed(by: disposeBag)
     }
     
     private func bindView() {

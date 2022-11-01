@@ -16,7 +16,6 @@ final class Network {
         let uuid = UIDevice.current.identifierForVendor?.uuidString else { fatalError("Create Apollo Client Error")}
 
         let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 5
         let uuidHeader = ["Croquis-UUID": uuid]
         configuration.httpAdditionalHeaders = uuidHeader
         print("uuidHeader \(uuidHeader)")

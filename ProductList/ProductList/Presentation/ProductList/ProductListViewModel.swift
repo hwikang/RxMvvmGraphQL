@@ -37,11 +37,16 @@ final class ProductListViewModel {
         dataSource.fetchProductList {[weak self] fetchResult in
             switch fetchResult {
             case .success(let result):
+                if let error = result.errors?.first as? Error {
+                    self?.productList.onError(error)
+                }
                 if let fetchList = result.data?.productList.itemList {
                     self?.productList.onNext(fetchList)
                 }
             case .failure(let error):
+                print(error)
                 self?.productList.onError(error)
+
             }
         }
     }
