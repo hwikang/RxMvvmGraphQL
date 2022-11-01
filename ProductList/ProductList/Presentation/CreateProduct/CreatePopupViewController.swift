@@ -79,7 +79,7 @@ final class CreatePopupViewController: UIViewController {
             let selectedSupplierIndex = self.popup.suppliersSegmentControl.selectedSegmentIndex
             guard let supplierId = self.getSupplierIdByIndex(selectedSupplierIndex) else { return }
 
-            let input = CreateProductInput(supplierId: "supplierId", nameKo: nameText, price: price)
+            let input = CreateProductInput(supplierId: supplierId, nameKo: nameText, price: price)
             self.createProductInput.onNext(input)
             
         }.disposed(by: disposeBag)
