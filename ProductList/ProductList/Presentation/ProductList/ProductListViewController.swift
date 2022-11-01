@@ -12,10 +12,9 @@ import RxCocoa
 
 final class ProductListViewController: UIViewController, UITableViewDelegate {
    
-    // MARK: - Property
     private let disposeBag = DisposeBag()
     private let viewModel = ProductListViewModel(dataSource: ProductDataSourceImpl())
-    // MARK: - UI
+    private let needUpdateList = PublishSubject<Bool>()
     lazy var productListTableView: UITableView = {
         let tableView = UITableView()
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
@@ -33,16 +32,14 @@ final class ProductListViewController: UIViewController, UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .red
         
         setUI()
         bindViewModel()
         bindView()
-        viewModel.fetchProductList()
     }
     
     func bindViewModel() {
-        let input = ProductListViewModel.Input()
+        let input = ProductListViewModel.Input(needUpdateList: needUpdateList.asObservable())
         let output = viewModel.transform(input: input)
         
         output.productList
@@ -58,13 +55,14 @@ final class ProductListViewController: UIViewController, UITableViewDelegate {
     func bindView() {
         createButton.rx.tap.bind {
             let popupVC = CreatePopupViewController()
-//            popupVC.show(parentView: self.view)
+            popupVC.delegate = self
             self.present(popupVC, animated: true)
         }.disposed(by: disposeBag)
     }
 }
 
-extension ProductListViewController {
+extension ProductListViewController: CreatePopupDeleate {
+    
     func setUI() {
         self.view.addSubview(productListTableView)
         self.view.addSubview(createButton)
@@ -81,4 +79,9 @@ extension ProductListViewController {
             make.width.height.equalTo(60)
         }
     }
+    
+    func onCreateDone() {
+        needUpdateList.onNext(true)
+    }
+
 }

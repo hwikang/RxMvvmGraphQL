@@ -11,24 +11,29 @@ import RxRelay
 
 final class ProductListViewModel {
     // MARK: Property
+    private let disposeBag = DisposeBag()
     private let dataSource: ProductDataSource
     private let productList = PublishSubject<[ProductListQuery.Data.ProductList.ItemList]>()
+    
     init(dataSource: ProductDataSource) {
         self.dataSource = dataSource
+        fetchProductList()
     }
     struct Input {
-        
+        let needUpdateList: Observable<Bool>
     }
     struct Output {
         let productList: Observable<[ProductListQuery.Data.ProductList.ItemList]>
     }
     
-    // MARK: Public function
     func transform(input: Input) -> Output {
+        input.needUpdateList.bind {[weak self] needUpdate in
+            if needUpdate {self?.fetchProductList()}
+        }.disposed(by: disposeBag)
         return Output(productList: productList.asObservable())
     }
     
-    func fetchProductList() {
+    private func fetchProductList() {
         dataSource.fetchProductList {[weak self] fetchResult in
             switch fetchResult {
             case .success(let result):
@@ -40,5 +45,4 @@ final class ProductListViewModel {
             }
         }
     }
-
 }
