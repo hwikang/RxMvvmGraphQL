@@ -57,8 +57,9 @@ final class ProductListViewController: UIViewController, UITableViewDelegate {
     
     func bindView() {
         createButton.rx.tap.bind {
-            let popupView = CreatePopupView()
-            popupView.show(parentView: self.view)
+            let popupVC = CreatePopupViewController()
+//            popupVC.show(parentView: self.view)
+            self.present(popupVC, animated: true)
         }.disposed(by: disposeBag)
     }
 }

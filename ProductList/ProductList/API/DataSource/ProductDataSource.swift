@@ -11,6 +11,7 @@ import Apollo
 protocol ProductDataSource {
     func fetchProductList(callBack: @escaping (Result<GraphQLResult<ProductListQuery.Data>, Error>) -> Void )
     func fetchSuppliers(callBack: @escaping (Result<GraphQLResult<SupplierListQuery.Data>, Error>) -> Void )
+    func createProduct(input: CreateProductInput,callBack: @escaping () -> Void)
 }
 
 final class ProductDataSourceImpl: ProductDataSource {
@@ -24,6 +25,12 @@ final class ProductDataSourceImpl: ProductDataSource {
         let query = SupplierListQuery(id_list: nil)
         Network.shared.apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheCompletely, contextIdentifier: nil, queue: .main) { fetchResult in
             callBack(fetchResult)
+        }
+    }
+    func createProduct(input: CreateProductInput, callBack: @escaping () -> Void) {
+        let mutation = CreateProductMutation(input: input)
+        Network.shared.apollo.perform(mutation: mutation, publishResultToStore: true, queue: .main) { fetchResult in
+            print(fetchResult)
         }
     }
 }

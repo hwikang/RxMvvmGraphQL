@@ -36,4 +36,7 @@ final class CreatePopupViewModel {
             }
         }
     }
+    
+    func createProduct() {
+    }
 }
