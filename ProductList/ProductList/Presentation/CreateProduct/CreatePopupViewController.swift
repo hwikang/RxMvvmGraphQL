@@ -9,7 +9,8 @@ import UIKit
 import RxSwift
 import RxRelay
 import Apollo
-protocol CreatePopupDeleate {
+
+protocol CreatePopupDelegate: AnyObject {
     func onCreateDone()
 }
 
@@ -18,7 +19,7 @@ final class CreatePopupViewController: UIViewController {
     private let viewModel = CreatePopupViewModel(dataSource: ProductDataSourceImpl())
     private let createProductInput = PublishSubject<CreateProductInput>()
     private var supplierList: [SupplierListQuery.Data.SupplierList.ItemList]?
-    public var delegate: CreatePopupDeleate?
+    public weak var delegate: CreatePopupDelegate?
     
     private let popup: CreatePopupView = {
        let view = CreatePopupView()
@@ -45,10 +46,13 @@ final class CreatePopupViewController: UIViewController {
             .bind(onNext: {[weak self] itemList in
                 guard let itemList = itemList else { return }
                 self?.supplierList = itemList
-                for index in 0..<itemList.count {
-                    self?.popup.suppliersSegmentControl.insertSegment(withTitle: itemList[index].name, at: index, animated: true)
+                DispatchQueue.main.async {
+                    for index in 0..<itemList.count {
+                        self?.popup.suppliersSegmentControl.insertSegment(withTitle: itemList[index].name, at: index, animated: true)
+                    }
+                    self?.popup.suppliersSegmentControl.selectedSegmentIndex = 0
                 }
-                self?.popup.suppliersSegmentControl.selectedSegmentIndex = 0
+                
             })
             .disposed(by: disposeBag)
         

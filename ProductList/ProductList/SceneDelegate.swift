@@ -16,7 +16,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
         window = UIWindow(windowScene: windowScene)
         
-        window?.rootViewController = ProductListViewController()
+        let mainVC = ProductListViewController()
+        let rootVC = UINavigationController(rootViewController: mainVC)
+//        rootVC.isNavigationBarHidden = true
+        window?.rootViewController = rootVC
         window?.makeKeyAndVisible()
     }
 

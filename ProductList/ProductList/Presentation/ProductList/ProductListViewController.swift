@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import Apollo
 
-final class ProductListViewController: UIViewController, UITableViewDelegate, CreatePopupDeleate {
+final class ProductListViewController: UIViewController, UITableViewDelegate, CreatePopupDelegate {
    
     private let disposeBag = DisposeBag()
     private let viewModel = ProductListViewModel(dataSource: ProductDataSourceImpl())
@@ -56,13 +56,20 @@ final class ProductListViewController: UIViewController, UITableViewDelegate, Cr
     }
     
     private func bindView() {
-        createButton.rx.tap.bind {
+        createButton.rx.tap.bind {[weak self] in
+            
             let popupVC = CreatePopupViewController()
             popupVC.delegate = self
-            self.present(popupVC, animated: true)
+            self?.present(popupVC, animated: true)
+        }.disposed(by: disposeBag)
+        
+        productListTableView.rx.modelSelected(ProductListQuery.Data.ProductList.ItemList.self).bind {[weak self] product in
+            print(product.id)
+            let id = product.id
+            let productVC = ProductViewController(productId: id)
+            self?.navigationController?.pushViewController(productVC, animated: true)
         }.disposed(by: disposeBag)
     }
-    
     
     func onCreateDone() {
         needUpdateList.onNext(true)

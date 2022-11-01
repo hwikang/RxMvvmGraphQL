@@ -11,7 +11,8 @@ import Apollo
 protocol ProductDataSource {
     func fetchProductList(callBack: @escaping (Result<GraphQLResult<ProductListQuery.Data>, Error>) -> Void )
     func fetchSuppliers(callBack: @escaping (Result<GraphQLResult<SupplierListQuery.Data>, Error>) -> Void )
-    func createProduct(input: CreateProductInput,callBack: @escaping (Result<GraphQLResult<CreateProductMutation.Data>, Error>) -> Void)
+    func createProduct(input: CreateProductInput, callBack: @escaping (Result<GraphQLResult<CreateProductMutation.Data>, Error>) -> Void)
+    func productDetail(id: String, callBack: @escaping (Result<GraphQLResult<ProductQuery.Data>, Error>) -> Void)
 }
 
 final class ProductDataSourceImpl: ProductDataSource {
@@ -29,8 +30,15 @@ final class ProductDataSourceImpl: ProductDataSource {
     }
     func createProduct(input: CreateProductInput, callBack: @escaping (Result<GraphQLResult<CreateProductMutation.Data>, Error>) -> Void) {
         let mutation = CreateProductMutation(input: input)
-        Network.shared.apollo.perform(mutation: mutation, publishResultToStore: true, queue: .main) { fetchResult in
+        Network.shared.apollo.perform(mutation: mutation, publishResultToStore: true, queue: .main) { result in
+            callBack(result)
+        }
+    }
+    func productDetail(id: String, callBack: @escaping (Result<GraphQLResult<ProductQuery.Data>, Error>) -> Void) {
+        let query = ProductQuery(id: id)
+        Network.shared.apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheCompletely, contextIdentifier: nil, queue: .main) { fetchResult in
             callBack(fetchResult)
         }
+
     }
 }
