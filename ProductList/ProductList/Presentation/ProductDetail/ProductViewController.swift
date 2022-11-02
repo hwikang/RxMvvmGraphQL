@@ -9,10 +9,11 @@ import Foundation
 import UIKit
 import RxSwift
 
-final class ProductViewController: UIViewController {
+final class ProductViewController: UIViewController, ProductDetailDelegate {
     private let disposeBag = DisposeBag()
     private lazy var viewModel = ProductViewModel(id: self.productId, dataSource: ProductDataSourceImpl())
     private let deleteProduct = PublishSubject<Bool>()
+    private let needUpdateProduct = PublishSubject<Bool>()
     private let productId: String
     public weak var delegate: ProductListDelegate?
 
@@ -81,13 +82,16 @@ final class ProductViewController: UIViewController {
         }.disposed(by: disposeBag)
         
         editButton.rx.tap.bind { [weak self] in
-            let updateVC = UpdatePopupViewController()
-            self?.present(updateVC, animated: true)
+            guard let self = self else { return }
+            let updateVC = UpdatePopupViewController(productId: self.productId)
+            updateVC.delegate = self
+            self.present(updateVC, animated: true)
         }.disposed(by: disposeBag)
         
     }
     private func bindViewModel() {
-        let input = ProductViewModel.Input(deleteProduct: deleteProduct.asObservable())
+        let input = ProductViewModel.Input(deleteProduct: deleteProduct.asObservable(), needUpdateProduct: needUpdateProduct.asObservable())
+        
         let output = viewModel.transform(input: input)
         
         output.productDetail
@@ -118,6 +122,10 @@ final class ProductViewController: UIViewController {
                     self?.present(dialog, animated: true)
                 }
             }.disposed(by: disposeBag)
+    }
+    
+    func onUpdateDone() {
+        self.needUpdateProduct.onNext(true)
     }
     
     required init?(coder: NSCoder) {

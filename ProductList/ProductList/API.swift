@@ -68,6 +68,82 @@ public struct DeleteProductInput: GraphQLMapConvertible {
   }
 }
 
+/// updateProduct의 입력
+public struct UpdateProductInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  /// - Parameters:
+  ///   - id: 상품 ID
+  ///   - nameKo: 한국어 상품명
+  ///   - nameEn: 영어 상품명
+  ///   - descriptionKo: 한국어 상품요약설명
+  ///   - descriptionEn: 영어 상품요약설명
+  ///   - price: 가격
+  public init(id: GraphQLID, nameKo: String, nameEn: String, descriptionKo: String, descriptionEn: String, price: Int) {
+    graphQLMap = ["id": id, "name_ko": nameKo, "name_en": nameEn, "description_ko": descriptionKo, "description_en": descriptionEn, "price": price]
+  }
+
+  /// 상품 ID
+  public var id: GraphQLID {
+    get {
+      return graphQLMap["id"] as! GraphQLID
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  /// 한국어 상품명
+  public var nameKo: String {
+    get {
+      return graphQLMap["name_ko"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "name_ko")
+    }
+  }
+
+  /// 영어 상품명
+  public var nameEn: String {
+    get {
+      return graphQLMap["name_en"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "name_en")
+    }
+  }
+
+  /// 한국어 상품요약설명
+  public var descriptionKo: String {
+    get {
+      return graphQLMap["description_ko"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "description_ko")
+    }
+  }
+
+  /// 영어 상품요약설명
+  public var descriptionEn: String {
+    get {
+      return graphQLMap["description_en"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "description_en")
+    }
+  }
+
+  /// 가격
+  public var price: Int {
+    get {
+      return graphQLMap["price"] as! Int
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "price")
+    }
+  }
+}
+
 public final class CreateProductMutation: GraphQLMutation {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition: String =
@@ -252,6 +328,204 @@ public final class DeleteProductMutation: GraphQLMutation {
         }
         set {
           resultMap.updateValue(newValue, forKey: "id")
+        }
+      }
+    }
+  }
+}
+
+public final class UpdateProductMutation: GraphQLMutation {
+  /// The raw GraphQL definition of this operation.
+  public let operationDefinition: String =
+    """
+    mutation updateProduct($input: UpdateProductInput!) {
+      updateProduct(input: $input) {
+        __typename
+        name_en
+        name_ko
+        description_en
+        description_ko
+        price
+        supplier {
+          __typename
+          name
+        }
+      }
+    }
+    """
+
+  public let operationName: String = "updateProduct"
+
+  public var input: UpdateProductInput
+
+  public init(input: UpdateProductInput) {
+    self.input = input
+  }
+
+  public var variables: GraphQLMap? {
+    return ["input": input]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes: [String] = ["Mutation"]
+
+    public static var selections: [GraphQLSelection] {
+      return [
+        GraphQLField("updateProduct", arguments: ["input": GraphQLVariable("input")], type: .nonNull(.object(UpdateProduct.selections))),
+      ]
+    }
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(updateProduct: UpdateProduct) {
+      self.init(unsafeResultMap: ["__typename": "Mutation", "updateProduct": updateProduct.resultMap])
+    }
+
+    /// 상품을 갱신한다
+    public var updateProduct: UpdateProduct {
+      get {
+        return UpdateProduct(unsafeResultMap: resultMap["updateProduct"]! as! ResultMap)
+      }
+      set {
+        resultMap.updateValue(newValue.resultMap, forKey: "updateProduct")
+      }
+    }
+
+    public struct UpdateProduct: GraphQLSelectionSet {
+      public static let possibleTypes: [String] = ["Product"]
+
+      public static var selections: [GraphQLSelection] {
+        return [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("name_en", type: .scalar(String.self)),
+          GraphQLField("name_ko", type: .scalar(String.self)),
+          GraphQLField("description_en", type: .scalar(String.self)),
+          GraphQLField("description_ko", type: .scalar(String.self)),
+          GraphQLField("price", type: .scalar(Int.self)),
+          GraphQLField("supplier", type: .object(Supplier.selections)),
+        ]
+      }
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(nameEn: String? = nil, nameKo: String? = nil, descriptionEn: String? = nil, descriptionKo: String? = nil, price: Int? = nil, supplier: Supplier? = nil) {
+        self.init(unsafeResultMap: ["__typename": "Product", "name_en": nameEn, "name_ko": nameKo, "description_en": descriptionEn, "description_ko": descriptionKo, "price": price, "supplier": supplier.flatMap { (value: Supplier) -> ResultMap in value.resultMap }])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// 영어 상품명
+      public var nameEn: String? {
+        get {
+          return resultMap["name_en"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "name_en")
+        }
+      }
+
+      /// 한국어 상품명
+      public var nameKo: String? {
+        get {
+          return resultMap["name_ko"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "name_ko")
+        }
+      }
+
+      /// 영어 상품요약설명
+      public var descriptionEn: String? {
+        get {
+          return resultMap["description_en"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "description_en")
+        }
+      }
+
+      /// 한국어 상품요약설명
+      public var descriptionKo: String? {
+        get {
+          return resultMap["description_ko"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "description_ko")
+        }
+      }
+
+      /// 가격
+      public var price: Int? {
+        get {
+          return resultMap["price"] as? Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "price")
+        }
+      }
+
+      /// 공급사
+      public var supplier: Supplier? {
+        get {
+          return (resultMap["supplier"] as? ResultMap).flatMap { Supplier(unsafeResultMap: $0) }
+        }
+        set {
+          resultMap.updateValue(newValue?.resultMap, forKey: "supplier")
+        }
+      }
+
+      public struct Supplier: GraphQLSelectionSet {
+        public static let possibleTypes: [String] = ["Supplier"]
+
+        public static var selections: [GraphQLSelection] {
+          return [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("name", type: .nonNull(.scalar(String.self))),
+          ]
+        }
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(name: String) {
+          self.init(unsafeResultMap: ["__typename": "Supplier", "name": name])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// 공급사명
+        public var name: String {
+          get {
+            return resultMap["name"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "name")
+          }
         }
       }
     }

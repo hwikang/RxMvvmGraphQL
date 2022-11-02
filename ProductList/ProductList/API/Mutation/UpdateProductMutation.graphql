@@ -1,0 +1,13 @@
+
+mutation updateProduct($input: UpdateProductInput!) {
+  updateProduct(input: $input) {
+    name_en
+    name_ko
+    description_en
+    description_ko
+    price
+    supplier{
+      name
+    }
+  }
+}

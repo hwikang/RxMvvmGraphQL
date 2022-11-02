@@ -33,14 +33,16 @@
 		BF7FADC92910FF48004109A4 /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADC82910FF48004109A4 /* ProductViewModel.swift */; };
 		BF7FADCB2912173A004109A4 /* DeleteProductMutation.graphql in Resources */ = {isa = PBXBuildFile; fileRef = BF7FADCA2912173A004109A4 /* DeleteProductMutation.graphql */; };
 		BF7FADCE29121D0E004109A4 /* ProductListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADCD29121D0E004109A4 /* ProductListDelegate.swift */; };
-		BF7FADD82912488E004109A4 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADD72912488E004109A4 /* LoadingIndicator.swift */; };
 		BF7FADD129123533004109A4 /* UpdatePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADD029123533004109A4 /* UpdatePopupViewController.swift */; };
 		BF7FADD329123582004109A4 /* UpdatePopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADD229123582004109A4 /* UpdatePopupViewModel.swift */; };
 		BF7FADD529123669004109A4 /* UpdatePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADD429123669004109A4 /* UpdatePopupView.swift */; };
+		BF7FADD82912488E004109A4 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADD72912488E004109A4 /* LoadingIndicator.swift */; };
 		BF98B41C290D13FC0058D155 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = BF98B41B290D13FC0058D155 /* .swiftlint.yml */; };
 		BF98B41E290D1BD40058D155 /* ProductListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98B41D290D1BD40058D155 /* ProductListViewModel.swift */; };
 		BF98B420290D1C300058D155 /* ProductDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98B41F290D1C300058D155 /* ProductDataSource.swift */; };
 		BF98B422290D1CA00058D155 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98B421290D1CA00058D155 /* API.swift */; };
+		BFB45B6B291251FC00F473B0 /* UpdateProductMutation.graphql in Sources */ = {isa = PBXBuildFile; fileRef = BFB45B6A291251FC00F473B0 /* UpdateProductMutation.graphql */; };
+		BFB45B6D2912583F00F473B0 /* ProductDetailDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB45B6C2912583F00F473B0 /* ProductDetailDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,14 +99,16 @@
 		BF7FADC82910FF48004109A4 /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
 		BF7FADCA2912173A004109A4 /* DeleteProductMutation.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DeleteProductMutation.graphql; sourceTree = "<group>"; };
 		BF7FADCD29121D0E004109A4 /* ProductListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListDelegate.swift; sourceTree = "<group>"; };
-		BF7FADD72912488E004109A4 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		BF7FADD029123533004109A4 /* UpdatePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePopupViewController.swift; sourceTree = "<group>"; };
 		BF7FADD229123582004109A4 /* UpdatePopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePopupViewModel.swift; sourceTree = "<group>"; };
 		BF7FADD429123669004109A4 /* UpdatePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePopupView.swift; sourceTree = "<group>"; };
+		BF7FADD72912488E004109A4 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		BF98B41B290D13FC0058D155 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		BF98B41D290D1BD40058D155 /* ProductListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewModel.swift; sourceTree = "<group>"; };
 		BF98B41F290D1C300058D155 /* ProductDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDataSource.swift; sourceTree = "<group>"; };
 		BF98B421290D1CA00058D155 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		BFB45B6A291251FC00F473B0 /* UpdateProductMutation.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UpdateProductMutation.graphql; sourceTree = "<group>"; };
+		BFB45B6C2912583F00F473B0 /* ProductDetailDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailDelegate.swift; sourceTree = "<group>"; };
 		FA6FFAFCB617D691C2A15254 /* Pods_ProductListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProductListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -217,6 +221,7 @@
 			children = (
 				7BFB9539290BC49B00C6DDBA /* CreateProductMutation.graphql */,
 				BF7FADCA2912173A004109A4 /* DeleteProductMutation.graphql */,
+				BFB45B6A291251FC00F473B0 /* UpdateProductMutation.graphql */,
 			);
 			path = Mutation;
 			sourceTree = "<group>";
@@ -280,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				BF7FADCD29121D0E004109A4 /* ProductListDelegate.swift */,
+				BFB45B6C2912583F00F473B0 /* ProductDetailDelegate.swift */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";
@@ -641,6 +647,7 @@
 				BF7FADD82912488E004109A4 /* LoadingIndicator.swift in Sources */,
 				BF98B420290D1C300058D155 /* ProductDataSource.swift in Sources */,
 				7BFB9535290BC23C00C6DDBA /* SupplierListQuery.graphql in Sources */,
+				BFB45B6D2912583F00F473B0 /* ProductDetailDelegate.swift in Sources */,
 				BF7FADC62910F9A1004109A4 /* ProductViewController.swift in Sources */,
 				BF7FADD329123582004109A4 /* UpdatePopupViewModel.swift in Sources */,
 				BF7FADC12910F3AB004109A4 /* Dialog.swift in Sources */,
@@ -659,6 +666,7 @@
 				BF7FADB8290E8EA7004109A4 /* ProductListTableViewCell.swift in Sources */,
 				BF7FADC92910FF48004109A4 /* ProductViewModel.swift in Sources */,
 				BF7FADBE2910BD8E004109A4 /* CreatePopupView.swift in Sources */,
+				BFB45B6B291251FC00F473B0 /* UpdateProductMutation.graphql in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

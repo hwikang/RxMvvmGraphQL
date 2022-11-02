@@ -14,6 +14,7 @@ final class ProductViewModel {
 
     struct Input {
         let deleteProduct: Observable<Bool>
+        let needUpdateProduct: Observable<Bool>
     }
     
     struct Output {
@@ -35,12 +36,15 @@ final class ProductViewModel {
             self?.deleteProduct()
         }.disposed(by: disposeBag)
         
+        input.needUpdateProduct.bind { [weak self] _ in
+            self?.getProductDetail()
+        }.disposed(by: disposeBag)
+        
         return Output(productDetail: productDetail.asObservable(),
                       deleteDone: deleteDone.asObservable())
     }
     
     private func getProductDetail() {
-
         dataSource.productDetail(id: self.id) {[weak self] fetchResult in
             switch fetchResult {
             case .success(let result):

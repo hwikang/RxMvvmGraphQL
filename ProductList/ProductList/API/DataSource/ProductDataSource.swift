@@ -14,6 +14,7 @@ protocol ProductDataSource {
     func createProduct(input: CreateProductInput, callBack: @escaping (Result<GraphQLResult<CreateProductMutation.Data>, Error>) -> Void)
     func productDetail(id: String, callBack: @escaping (Result<GraphQLResult<ProductQuery.Data>, Error>) -> Void)
     func deleteProduct(id: String, callBack: @escaping (Result<GraphQLResult<DeleteProductMutation.Data>, Error>) -> Void)
+    func updateProduct(input: UpdateProductInput, callBack: @escaping (Result<GraphQLResult<UpdateProductMutation.Data>, Error>) -> Void) 
 }
 
 final class ProductDataSourceImpl: ProductDataSource {
@@ -47,4 +48,15 @@ final class ProductDataSourceImpl: ProductDataSource {
             callBack(result)
         }
     }
+    
+    func updateProduct(input: UpdateProductInput, callBack: @escaping (Result<GraphQLResult<UpdateProductMutation.Data>, Error>) -> Void) {
+        let mutation = UpdateProductMutation(input: input)
+        Network.shared.apollo.perform(mutation: mutation, publishResultToStore: true, queue: .main) { result in
+            callBack(result)
+        }
+    }
+    
+    
 }
+
+

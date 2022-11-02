@@ -14,13 +14,19 @@ import Apollo
 final class UpdatePopupViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let viewModel = UpdatePopupViewModel(dataSource: ProductDataSourceImpl())
+    private let updateProductInput = PublishSubject<UpdateProductInput>()
+    public weak var delegate: ProductDetailDelegate?
     
     private let popup: UpdatePopupView = {
        let view = UpdatePopupView()
         view.backgroundColor = .white
         return view
     }()
-    
+    private let productId: String
+    init(productId: String) {
+        self.productId = productId
+        super.init(nibName: nil, bundle: nil)
+    }
     override func viewDidLoad() {
         setUI()
         bindViewModel()
@@ -30,13 +36,38 @@ final class UpdatePopupViewController: UIViewController {
     }
     
     private func bindViewModel() {
-        let input = UpdatePopupViewModel.Input()
+        let input = UpdatePopupViewModel.Input(updateInput: updateProductInput.asObservable())
         let output = viewModel.transform(input: input)
-        
+        output.updateDone
+            .catch {[weak self] error in
+                self?.present(Dialog.getDialog(title: "에러", message: error.localizedDescription), animated: true)
+                return Observable.just(UpdateProductMutation.Data.UpdateProduct())
+            }
+            .bind(onNext: {[weak self] product in
+                print(product)
+                let dialog = Dialog.getDialog(title: "수정", message: "상품 정보가 수정되었습니다.") {
+                    self?.delegate?.onUpdateDone()
+                    self?.dismiss(animated: true)
+                }
+                self?.present(dialog, animated: true)
+        }).disposed(by: disposeBag)
     }
     
     private func bindView() {
-        
+        popup.createButton.rx.tap.bind { [weak self] in
+            guard let self = self,
+                  let priceText = self.popup.priceTextField.text,
+                  let nameKoText = self.popup.nameKoTextField.text,
+                    let nameEnText = self.popup.nameEnTextField.text,
+                    let descKoText = self.popup.descKoTextView.text,
+                    let descEnText = self.popup.descEnTextView.text else { return }
+            
+            if !self.isValidText(priceText: priceText, nameKoText: nameKoText, nameEnText: nameEnText, descKoText: descKoText, descEnText: descEnText) { return }
+            guard let price = Int(priceText) else { return }
+
+            let input = UpdateProductInput(id: self.productId, nameKo: nameKoText, nameEn: nameEnText, descriptionKo: descKoText, descriptionEn: descEnText, price: price)
+            self.updateProductInput.onNext(input)
+        }.disposed(by: disposeBag)
            
     }
     
@@ -55,9 +86,21 @@ final class UpdatePopupViewController: UIViewController {
         }.disposed(by: disposeBag)
     }
     
-    private func isValidText(priceText: String, nameText: String) -> Bool {
-        if Validator.isEmpty(nameText) {
-            self.present(Dialog.getDialog(title: "입력", message: "이름을 입력해주세요."), animated: true)
+    private func isValidText(priceText: String, nameKoText: String, nameEnText: String, descKoText: String, descEnText: String) -> Bool {
+        if Validator.isEmpty(nameKoText) {
+            self.present(Dialog.getDialog(title: "입력", message: "한국어 이름을 입력해주세요."), animated: true)
+            return false
+        }
+        if Validator.isEmpty(nameEnText) {
+            self.present(Dialog.getDialog(title: "입력", message: "영어 이름을 입력해주세요."), animated: true)
+            return false
+        }
+        if Validator.isEmpty(descKoText) {
+            self.present(Dialog.getDialog(title: "입력", message: "한국어 상품 요약 설명을 입력해주세요."), animated: true)
+            return false
+        }
+        if Validator.isEmpty(descEnText) {
+            self.present(Dialog.getDialog(title: "입력", message: "영어 상품 요약 설명을 입력해주세요."), animated: true)
             return false
         }
         if Validator.isEmpty(priceText) {
@@ -81,6 +124,9 @@ final class UpdatePopupViewController: UIViewController {
         self.dismiss(animated: true)
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension UpdatePopupViewController {
