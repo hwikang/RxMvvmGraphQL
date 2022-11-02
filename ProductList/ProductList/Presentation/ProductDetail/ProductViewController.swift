@@ -14,7 +14,7 @@ final class ProductViewController: UIViewController {
     private lazy var viewModel = ProductViewModel(id: self.productId, dataSource: ProductDataSourceImpl())
     private let deleteProduct = PublishSubject<Bool>()
     private let productId: String
-    public var delegate: ProductListDelegate?
+    public weak var delegate: ProductListDelegate?
 
     // MARK: - UI
     private let scrollView: UIScrollView = {
@@ -51,6 +51,13 @@ final class ProductViewController: UIViewController {
         let button = UIButton()
         button.setTitle("삭제", for: .normal)
         button.backgroundColor = .systemRed
+        return button
+    }()
+    
+    private let editButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("수정", for: .normal)
+        button.backgroundColor = .systemCyan
         return button
     }()
     
@@ -116,6 +123,7 @@ extension ProductViewController {
     private func setUI() {
         self.view.addSubview(scrollView)
         self.view.addSubview(deleteButton)
+        self.view.addSubview(editButton)
         scrollView.addSubview(stackView)
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(descLabel)
@@ -154,6 +162,11 @@ extension ProductViewController {
         }
         deleteButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-10)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-10)
+            make.width.height.equalTo(60)
+        }
+        editButton.snp.makeConstraints { make in
+            make.trailing.equalTo(deleteButton.snp.leading).offset(-10)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-10)
             make.width.height.equalTo(60)
         }

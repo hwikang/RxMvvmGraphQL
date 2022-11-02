@@ -10,19 +10,19 @@ import UIKit
 
 final class ProductListTableViewCell: UITableViewCell {
 
-    private lazy var idLabel: UILabel = {
+    private let idLabel: UILabel = {
         let label = UILabel()
         return label
     }()
-    private lazy var nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel()
         return label
     }()
-    private lazy var priceLabel: UILabel = {
+    private let priceLabel: UILabel = {
         let label = UILabel()
         return label
     }()
-    private lazy var supplierLabel: UILabel = {
+    private let supplierLabel: UILabel = {
         let label = UILabel()
         return label
     }()

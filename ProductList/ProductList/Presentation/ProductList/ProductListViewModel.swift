@@ -10,7 +10,7 @@ import RxSwift
 import RxRelay
 
 final class ProductListViewModel {
-    // MARK: Property
+
     private let disposeBag = DisposeBag()
     private let dataSource: ProductDataSource
     private let productList = PublishSubject<[ProductListQuery.Data.ProductList.ItemList]>()

@@ -27,6 +27,7 @@ final class CreatePopupViewController: UIViewController {
         setUI()
         bindViewModel()
         bindView()
+        bindNotification()
         setDismissKeyboardEvent()
     }
     
@@ -85,6 +86,23 @@ final class CreatePopupViewController: UIViewController {
         
         popup.closeButton.rx.tap.bind {[weak self] in
             self?.hide()
+        }.disposed(by: disposeBag)
+        
+       
+    }
+    
+    private func bindNotification() {
+        let keyboardObservable = Observable.merge([
+            NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification).map({ _ in return true }),
+            NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification).map({ _ in return false})])
+        keyboardObservable.bind {[weak self] isShowKeyboard in
+            guard let self = self else {return }
+            if isShowKeyboard {
+                self.popup.center = CGPoint(x: self.view.center.x, y: 200 )
+            } else {
+                self.popup.center = CGPoint(x: self.view.center.x, y: self.view.center.y)
+
+            }
         }.disposed(by: disposeBag)
     }
     

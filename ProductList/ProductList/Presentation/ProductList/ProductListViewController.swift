@@ -16,6 +16,7 @@ final class ProductListViewController: UIViewController, UITableViewDelegate, Pr
     private let disposeBag = DisposeBag()
     private let viewModel = ProductListViewModel(dataSource: ProductDataSourceImpl())
     private let needUpdateList = PublishSubject<Bool>()
+    
     private lazy var productListTableView: UITableView = {
         let tableView = UITableView()
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
