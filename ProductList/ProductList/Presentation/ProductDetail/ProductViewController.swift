@@ -79,6 +79,12 @@ final class ProductViewController: UIViewController {
             }
             self?.present(dialog, animated: true)
         }.disposed(by: disposeBag)
+        
+        editButton.rx.tap.bind { [weak self] in
+            let updateVC = UpdatePopupViewController()
+            self?.present(updateVC, animated: true)
+        }.disposed(by: disposeBag)
+        
     }
     private func bindViewModel() {
         let input = ProductViewModel.Input(deleteProduct: deleteProduct.asObservable())

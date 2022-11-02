@@ -34,6 +34,9 @@
 		BF7FADCB2912173A004109A4 /* DeleteProductMutation.graphql in Resources */ = {isa = PBXBuildFile; fileRef = BF7FADCA2912173A004109A4 /* DeleteProductMutation.graphql */; };
 		BF7FADCE29121D0E004109A4 /* ProductListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADCD29121D0E004109A4 /* ProductListDelegate.swift */; };
 		BF7FADD82912488E004109A4 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADD72912488E004109A4 /* LoadingIndicator.swift */; };
+		BF7FADD129123533004109A4 /* UpdatePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADD029123533004109A4 /* UpdatePopupViewController.swift */; };
+		BF7FADD329123582004109A4 /* UpdatePopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADD229123582004109A4 /* UpdatePopupViewModel.swift */; };
+		BF7FADD529123669004109A4 /* UpdatePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADD429123669004109A4 /* UpdatePopupView.swift */; };
 		BF98B41C290D13FC0058D155 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = BF98B41B290D13FC0058D155 /* .swiftlint.yml */; };
 		BF98B41E290D1BD40058D155 /* ProductListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98B41D290D1BD40058D155 /* ProductListViewModel.swift */; };
 		BF98B420290D1C300058D155 /* ProductDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98B41F290D1C300058D155 /* ProductDataSource.swift */; };
@@ -95,6 +98,9 @@
 		BF7FADCA2912173A004109A4 /* DeleteProductMutation.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DeleteProductMutation.graphql; sourceTree = "<group>"; };
 		BF7FADCD29121D0E004109A4 /* ProductListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListDelegate.swift; sourceTree = "<group>"; };
 		BF7FADD72912488E004109A4 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
+		BF7FADD029123533004109A4 /* UpdatePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePopupViewController.swift; sourceTree = "<group>"; };
+		BF7FADD229123582004109A4 /* UpdatePopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePopupViewModel.swift; sourceTree = "<group>"; };
+		BF7FADD429123669004109A4 /* UpdatePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePopupView.swift; sourceTree = "<group>"; };
 		BF98B41B290D13FC0058D155 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		BF98B41D290D1BD40058D155 /* ProductListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewModel.swift; sourceTree = "<group>"; };
 		BF98B41F290D1C300058D155 /* ProductDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDataSource.swift; sourceTree = "<group>"; };
@@ -233,14 +239,14 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		BF7FADB9290EA327004109A4 /* CreateProduct */ = {
+		BF7FADB9290EA327004109A4 /* CreatePopup */ = {
 			isa = PBXGroup;
 			children = (
 				BF7FADBC2910BD53004109A4 /* Components */,
 				BF7FADBA290EA393004109A4 /* CreatePopupViewController.swift */,
 				7BB89FBC290F6748006AE903 /* CreatePopupViewModel.swift */,
 			);
-			path = CreateProduct;
+			path = CreatePopup;
 			sourceTree = "<group>";
 		};
 		BF7FADBC2910BD53004109A4 /* Components */ = {
@@ -278,13 +284,32 @@
 			path = Delegate;
 			sourceTree = "<group>";
 		};
+		BF7FADCF29123523004109A4 /* UpdatePopup */ = {
+			isa = PBXGroup;
+			children = (
+				BF7FADD629123679004109A4 /* Components */,
+				BF7FADD029123533004109A4 /* UpdatePopupViewController.swift */,
+				BF7FADD229123582004109A4 /* UpdatePopupViewModel.swift */,
+			);
+			path = UpdatePopup;
+			sourceTree = "<group>";
+		};
+		BF7FADD629123679004109A4 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				BF7FADD429123669004109A4 /* UpdatePopupView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		BF98B417290D12470058D155 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				BF7FADCF29123523004109A4 /* UpdatePopup */,
 				BF7FADCC29121CE9004109A4 /* Delegate */,
 				BF7FADC42910F992004109A4 /* ProductDetail */,
 				BF7FADBF2910F37F004109A4 /* Common */,
-				BF7FADB9290EA327004109A4 /* CreateProduct */,
+				BF7FADB9290EA327004109A4 /* CreatePopup */,
 				BF98B419290D12730058D155 /* ProductList */,
 				BF98B418290D12690058D155 /* Launch */,
 			);
@@ -617,7 +642,9 @@
 				BF98B420290D1C300058D155 /* ProductDataSource.swift in Sources */,
 				7BFB9535290BC23C00C6DDBA /* SupplierListQuery.graphql in Sources */,
 				BF7FADC62910F9A1004109A4 /* ProductViewController.swift in Sources */,
+				BF7FADD329123582004109A4 /* UpdatePopupViewModel.swift in Sources */,
 				BF7FADC12910F3AB004109A4 /* Dialog.swift in Sources */,
+				BF7FADD129123533004109A4 /* UpdatePopupViewController.swift in Sources */,
 				7BB89FBD290F6748006AE903 /* CreatePopupViewModel.swift in Sources */,
 				BF7FADC32910F609004109A4 /* Validator.swift in Sources */,
 				7BFB9533290BB92A00C6DDBA /* Network.swift in Sources */,
@@ -626,6 +653,7 @@
 				7B01565C290BA80A00E00177 /* ProductListViewController.swift in Sources */,
 				BF7FADCE29121D0E004109A4 /* ProductListDelegate.swift in Sources */,
 				7B015658290BA80A00E00177 /* AppDelegate.swift in Sources */,
+				BF7FADD529123669004109A4 /* UpdatePopupView.swift in Sources */,
 				BF98B422290D1CA00058D155 /* API.swift in Sources */,
 				7B01565A290BA80A00E00177 /* SceneDelegate.swift in Sources */,
 				BF7FADB8290E8EA7004109A4 /* ProductListTableViewCell.swift in Sources */,
