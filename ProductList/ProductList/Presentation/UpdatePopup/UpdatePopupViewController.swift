@@ -14,7 +14,6 @@ import Apollo
 final class UpdatePopupViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let viewModel = UpdatePopupViewModel(dataSource: ProductDataSourceImpl())
-//    private let updateProductInput = PublishSubject<UpdateProductInput>()
     
     private let popup: UpdatePopupView = {
        let view = UpdatePopupView()
@@ -38,8 +37,7 @@ final class UpdatePopupViewController: UIViewController {
     
     private func bindView() {
         
-        
-       
+           
     }
     
     private func bindNotification() {
@@ -49,14 +47,13 @@ final class UpdatePopupViewController: UIViewController {
         keyboardObservable.bind {[weak self] isShowKeyboard in
             guard let self = self else {return }
             if isShowKeyboard {
-                self.popup.center = CGPoint(x: self.view.center.x, y: 240 )
+                self.remakePupupConstraint(yOffset: -100)
             } else {
-                self.popup.center = CGPoint(x: self.view.center.x, y: self.view.center.y)
+                self.remakePupupConstraint(yOffset: 0)
 
             }
         }.disposed(by: disposeBag)
     }
-    
     
     private func isValidText(priceText: String, nameText: String) -> Bool {
         if Validator.isEmpty(nameText) {
@@ -97,7 +94,20 @@ extension UpdatePopupViewController {
         popup.snp.makeConstraints { make in
             make.width.equalTo(deviceSize.width * 0.8)
             make.height.equalTo(550)
-            make.center.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.top.equalTo(40)
+        }
+    }
+    private func remakePupupConstraint(yOffset: Int) {
+        let deviceSize = UIScreen.main.bounds
+        self.popup.snp.remakeConstraints { make in
+            make.width.equalTo(deviceSize.width * 0.8)
+            make.height.equalTo(550)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(yOffset)
+        }
+        UIView.animate(withDuration: 1, delay: .zero, options: .curveEaseIn) {[weak self] in
+            self?.view.layoutSubviews()
         }
     }
 }
