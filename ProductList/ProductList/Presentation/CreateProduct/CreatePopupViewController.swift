@@ -10,16 +10,12 @@ import RxSwift
 import RxRelay
 import Apollo
 
-protocol CreatePopupDelegate: AnyObject {
-    func onCreateDone()
-}
-
 final class CreatePopupViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let viewModel = CreatePopupViewModel(dataSource: ProductDataSourceImpl())
     private let createProductInput = PublishSubject<CreateProductInput>()
     private var supplierList: [SupplierListQuery.Data.SupplierList.ItemList]?
-    public weak var delegate: CreatePopupDelegate?
+    public weak var delegate: ProductListDelegate?
     
     private let popup: CreatePopupView = {
        let view = CreatePopupView()

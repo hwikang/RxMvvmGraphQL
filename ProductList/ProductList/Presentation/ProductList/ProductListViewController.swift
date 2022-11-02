@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import Apollo
 
-final class ProductListViewController: UIViewController, UITableViewDelegate, CreatePopupDelegate {
+final class ProductListViewController: UIViewController, UITableViewDelegate, ProductListDelegate {
    
     private let disposeBag = DisposeBag()
     private let viewModel = ProductListViewModel(dataSource: ProductDataSourceImpl())
@@ -64,14 +64,18 @@ final class ProductListViewController: UIViewController, UITableViewDelegate, Cr
         }.disposed(by: disposeBag)
         
         productListTableView.rx.modelSelected(ProductListQuery.Data.ProductList.ItemList.self).bind {[weak self] product in
-            print(product.id)
             let id = product.id
             let productVC = ProductViewController(productId: id)
+            productVC.delegate = self
             self?.navigationController?.pushViewController(productVC, animated: true)
         }.disposed(by: disposeBag)
     }
     
     func onCreateDone() {
+        needUpdateList.onNext(true)
+    }
+    
+    func onDeleteDone() {
         needUpdateList.onNext(true)
     }
 }

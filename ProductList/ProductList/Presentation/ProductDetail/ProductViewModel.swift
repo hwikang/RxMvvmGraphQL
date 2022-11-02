@@ -8,14 +8,17 @@
 import Foundation
 import RxSwift
 final class ProductViewModel {
-    private let productList = PublishSubject<ProductQuery.Data.Product>()
+    private let disposeBag = DisposeBag()
+    private let productDetail = PublishSubject<ProductQuery.Data.Product>()
+    private let deleteDone = PublishSubject<Bool>()
 
     struct Input {
-        
+        let deleteProduct: Observable<Bool>
     }
     
     struct Output {
-        let productList: Observable<ProductQuery.Data.Product>
+        let productDetail: Observable<ProductQuery.Data.Product>
+        let deleteDone: Observable<Bool>
     }
     private let dataSource: ProductDataSource
     private let id: String
@@ -23,29 +26,52 @@ final class ProductViewModel {
     init(id: String, dataSource: ProductDataSource) {
         self.id = id
         self.dataSource = dataSource
-        productDetail()
+        getProductDetail()
     }
     
     func transform(input: Input) -> Output {
-        return Output(productList: productList.asObservable())
+        
+        input.deleteProduct.bind {[weak self] _ in
+            self?.deleteProduct()
+        }.disposed(by: disposeBag)
+        
+        return Output(productDetail: productDetail.asObservable(),
+                      deleteDone: deleteDone.asObservable())
     }
     
-    func productDetail() {
+    private func getProductDetail() {
 
         dataSource.productDetail(id: self.id) {[weak self] fetchResult in
             switch fetchResult {
             case .success(let result):
                 if let error = result.errors?.first as? Error {
-                    self?.productList.onError(error)
+                    self?.productDetail.onError(error)
                 }
                 if let product = result.data?.product {
-                    self?.productList.onNext(product)
+                    self?.productDetail.onNext(product)
                 }
             case .failure(let error):
-                self?.productList.onError(error)
+                self?.productDetail.onError(error)
             }
         }
     }
     
+    private func deleteProduct() {
+        dataSource.deleteProduct(id: id) {[weak self] deleteResult in
+            print(deleteResult)
+            switch deleteResult {
+            case .success(let result):
+                if let error = result.errors?.first as? Error {
+                    self?.deleteDone.onError(error)
+                } else {
+                    self?.deleteDone.onNext(true)
+                }
+               
+            case .failure(let error):
+                self?.deleteDone.onError(error)
+
+            }
+        }
+    }
     
 }

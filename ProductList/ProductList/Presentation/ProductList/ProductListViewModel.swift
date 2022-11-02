@@ -41,6 +41,7 @@ final class ProductListViewModel {
                     self?.productList.onError(error)
                 }
                 if let fetchList = result.data?.productList.itemList {
+                    print("fetchList \(fetchList)")
                     self?.productList.onNext(fetchList)
                 }
             case .failure(let error):

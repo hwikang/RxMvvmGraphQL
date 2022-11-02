@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 final class CreatePopupView: UIView {
     
     public let closeButton: UIButton = {

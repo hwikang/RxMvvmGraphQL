@@ -31,6 +31,8 @@
 		BF7FADC32910F609004109A4 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADC22910F609004109A4 /* Validator.swift */; };
 		BF7FADC62910F9A1004109A4 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADC52910F9A1004109A4 /* ProductViewController.swift */; };
 		BF7FADC92910FF48004109A4 /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADC82910FF48004109A4 /* ProductViewModel.swift */; };
+		BF7FADCB2912173A004109A4 /* DeleteProductMutation.graphql in Resources */ = {isa = PBXBuildFile; fileRef = BF7FADCA2912173A004109A4 /* DeleteProductMutation.graphql */; };
+		BF7FADCE29121D0E004109A4 /* ProductListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7FADCD29121D0E004109A4 /* ProductListDelegate.swift */; };
 		BF98B41C290D13FC0058D155 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = BF98B41B290D13FC0058D155 /* .swiftlint.yml */; };
 		BF98B41E290D1BD40058D155 /* ProductListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98B41D290D1BD40058D155 /* ProductListViewModel.swift */; };
 		BF98B420290D1C300058D155 /* ProductDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98B41F290D1C300058D155 /* ProductDataSource.swift */; };
@@ -89,6 +91,8 @@
 		BF7FADC52910F9A1004109A4 /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
 		BF7FADC72910FC62004109A4 /* ProductQuery.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ProductQuery.graphql; sourceTree = "<group>"; };
 		BF7FADC82910FF48004109A4 /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
+		BF7FADCA2912173A004109A4 /* DeleteProductMutation.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DeleteProductMutation.graphql; sourceTree = "<group>"; };
+		BF7FADCD29121D0E004109A4 /* ProductListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListDelegate.swift; sourceTree = "<group>"; };
 		BF98B41B290D13FC0058D155 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		BF98B41D290D1BD40058D155 /* ProductListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewModel.swift; sourceTree = "<group>"; };
 		BF98B41F290D1C300058D155 /* ProductDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDataSource.swift; sourceTree = "<group>"; };
@@ -153,8 +157,8 @@
 				7B015657290BA80A00E00177 /* AppDelegate.swift */,
 				7B015659290BA80A00E00177 /* SceneDelegate.swift */,
 				BF98B421290D1CA00058D155 /* API.swift */,
-				BF98B417290D12470058D155 /* Presentation */,
 				7B01568C290BB76000E00177 /* schema.json */,
+				BF98B417290D12470058D155 /* Presentation */,
 				7BFB9530290BB82F00C6DDBA /* API */,
 				7B015660290BA80B00E00177 /* Assets.xcassets */,
 				7B015665290BA80B00E00177 /* Info.plist */,
@@ -204,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				7BFB9539290BC49B00C6DDBA /* CreateProductMutation.graphql */,
+				BF7FADCA2912173A004109A4 /* DeleteProductMutation.graphql */,
 			);
 			path = Mutation;
 			sourceTree = "<group>";
@@ -262,9 +267,18 @@
 			path = ProductDetail;
 			sourceTree = "<group>";
 		};
+		BF7FADCC29121CE9004109A4 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				BF7FADCD29121D0E004109A4 /* ProductListDelegate.swift */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
 		BF98B417290D12470058D155 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				BF7FADCC29121CE9004109A4 /* Delegate */,
 				BF7FADC42910F992004109A4 /* ProductDetail */,
 				BF7FADBF2910F37F004109A4 /* Common */,
 				BF7FADB9290EA327004109A4 /* CreateProduct */,
@@ -427,6 +441,7 @@
 				BF98B41C290D13FC0058D155 /* .swiftlint.yml in Resources */,
 				7B015664290BA80B00E00177 /* LaunchScreen.storyboard in Resources */,
 				7BFB953A290BC49B00C6DDBA /* CreateProductMutation.graphql in Resources */,
+				BF7FADCB2912173A004109A4 /* DeleteProductMutation.graphql in Resources */,
 				7BFB9537290BC30900C6DDBA /* ProductListQuery.graphql in Resources */,
 				7B015661290BA80B00E00177 /* Assets.xcassets in Resources */,
 				7B01568D290BB76000E00177 /* schema.json in Resources */,
@@ -605,6 +620,7 @@
 				BF7FADBB290EA393004109A4 /* CreatePopupViewController.swift in Sources */,
 				BF98B41E290D1BD40058D155 /* ProductListViewModel.swift in Sources */,
 				7B01565C290BA80A00E00177 /* ProductListViewController.swift in Sources */,
+				BF7FADCE29121D0E004109A4 /* ProductListDelegate.swift in Sources */,
 				7B015658290BA80A00E00177 /* AppDelegate.swift in Sources */,
 				BF98B422290D1CA00058D155 /* API.swift in Sources */,
 				7B01565A290BA80A00E00177 /* SceneDelegate.swift in Sources */,
