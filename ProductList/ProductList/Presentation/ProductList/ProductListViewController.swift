@@ -16,7 +16,7 @@ final class ProductListViewController: UIViewController, UITableViewDelegate, Cr
     private let disposeBag = DisposeBag()
     private let viewModel = ProductListViewModel(dataSource: ProductDataSourceImpl())
     private let needUpdateList = PublishSubject<Bool>()
-    lazy var productListTableView: UITableView = {
+    private lazy var productListTableView: UITableView = {
         let tableView = UITableView()
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
         tableView.register(ProductListTableViewCell.self, forCellReuseIdentifier: "ProductListCell")
@@ -24,7 +24,7 @@ final class ProductListViewController: UIViewController, UITableViewDelegate, Cr
         return tableView
     }()
     
-    lazy var createButton: UIButton = {
+    private let createButton: UIButton = {
         let button = UIButton()
         button.setTitle("생성", for: .normal)
         button.backgroundColor = .systemBlue
@@ -90,10 +90,8 @@ extension ProductListViewController {
         }
         createButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-10)
-            make.bottom.equalToSuperview().offset(-10)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-10)
             make.width.height.equalTo(60)
         }
     }
-    
-
 }

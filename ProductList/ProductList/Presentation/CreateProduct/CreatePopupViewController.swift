@@ -39,8 +39,8 @@ final class CreatePopupViewController: UIViewController {
         let output = viewModel.transform(input: input)
         
         output.supplierList
-            .catch { error in
-                self.present(Dialog.getDialog(title: "에러", message: error.localizedDescription), animated: true)
+            .catch {[weak self] error in
+                self?.present(Dialog.getDialog(title: "에러", message: error.localizedDescription), animated: true)
                 return Observable.just([])
             }
             .bind(onNext: {[weak self] itemList in
@@ -57,9 +57,8 @@ final class CreatePopupViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.createDone
-            .catch { error in
-                self.present(Dialog.getDialog(title: "에러", message: error.localizedDescription), animated: true)
-
+            .catch {[weak self] error in
+                self?.present(Dialog.getDialog(title: "에러", message: error.localizedDescription), animated: true)
                 return Observable.just(false)
             }
             .bind(onNext: {[weak self] isDone in

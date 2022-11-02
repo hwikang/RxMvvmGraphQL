@@ -18,7 +18,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let mainVC = ProductListViewController()
         let rootVC = UINavigationController(rootViewController: mainVC)
-//        rootVC.isNavigationBarHidden = true
         window?.rootViewController = rootVC
         window?.makeKeyAndVisible()
     }

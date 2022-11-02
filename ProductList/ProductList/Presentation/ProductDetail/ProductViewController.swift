@@ -10,46 +10,46 @@ import UIKit
 import RxSwift
 
 final class ProductViewController: UIViewController {
-//    # 한국어/영어 상품명, 요약설명, 가격, 공급사를 표시합니다.
     private let disposeBag = DisposeBag()
     private lazy var viewModel = ProductViewModel(id: self.productId, dataSource: ProductDataSourceImpl())
     private let productId: String
     
     // MARK: - UI
-//    lazy var scrollView: UIScrollView = {
-//        let scroll = UIScrollView()
-//        scroll.isScrollEnabled = true
-//        scroll.backgroundColor = .blue
-//        return scroll
-//    }()
-//
-//    lazy var stackView: UIStackView = {
-//       let stackView = UIStackView()
-//        stackView.axis = .vertical
-//        stackView.distribution = .fill
-//        stackView.backgroundColor = .red
-//        return stackView
-//    }()
-    lazy var nameLabel: UILabel = {
+    private let scrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.isScrollEnabled = true
+        return scroll
+    }()
+
+    private let stackView: UIStackView = {
+       let stackView = UIStackView()
+        stackView.axis = .vertical
+        return stackView
+    }()
+    private let nameLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .green
         return label
     }()
-    lazy var descLabel: UILabel = {
+    private let descLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-//        label.sizeToFit()
-        label.backgroundColor = .yellow
         return label
     }()
-    lazy var priceLabel: UILabel = {
+    private let priceLabel: UILabel = {
         let label = UILabel()
         return label
     }()
-    lazy var supplierLabel: UILabel = {
+    private let supplierLabel: UILabel = {
         let label = UILabel()
         return label
+    }()
+    
+    private let deleteButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("삭제", for: .normal)
+        button.backgroundColor = .systemRed
+        return button
     }()
     
     init(productId: String) {
@@ -60,21 +60,36 @@ final class ProductViewController: UIViewController {
     override func viewDidLoad() {
         self.view.backgroundColor = .white
         setUI()
+        bindView()
         bindViewModel()
     }
-    
+    private func bindView() {
+        deleteButton.rx.tap.bind { [weak self] in
+            print("Tap")
+            let dialog = Dialog.getQuestionDialog(title: "삭제", message: "상품을 삭제 하시겠습니까?") {
+                //Todo: Delete
+                
+            }
+            self?.present(dialog, animated: true)
+        }.disposed(by: disposeBag)
+    }
     private func bindViewModel() {
         let input = ProductViewModel.Input()
         let output = viewModel.transform(input: input)
         
-        output.productList.bind {[weak self] product in
-            print(product)
-            self?.nameLabel.text = "\(product.nameKo ?? "") \(product.nameEn ?? "")"
-            self?.descLabel.text = "dasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasddasdasdasdasdasdasd\(product.descriptionKo ?? "") \(product.descriptionEn ?? "")"
-            self?.priceLabel.text = "\(product.price ?? 0) 원"
-            self?.supplierLabel.text = "\(product.supplier?.name ?? "")"
+        output.productList
+            .catch { [weak self] error in
+                self?.present(Dialog.getDialog(title: "에러", message: error.localizedDescription), animated: true)
+                return Observable.just(ProductQuery.Data.Product())
+            }
+            .bind {[weak self] product in
+                DispatchQueue.main.async {
+                    self?.nameLabel.text = "\(product.nameKo ?? "") \(product.nameEn ?? "")"
+                    self?.descLabel.text = "\(product.descriptionKo ?? "") \(product.descriptionEn ?? "")"
+                    self?.priceLabel.text = "\(product.price ?? 0) 원"
+                    self?.supplierLabel.text = "\(product.supplier?.name ?? "")"
+                }
             
-
         }.disposed(by: disposeBag)
     }
     
@@ -85,41 +100,48 @@ final class ProductViewController: UIViewController {
 
 extension ProductViewController {
     private func setUI() {
-//        self.view.addSubview(scrollView)
-//        scrollView.addSubview(stackView)
-        view.addSubview(nameLabel)
-        view.addSubview(descLabel)
-        view.addSubview(priceLabel)
-        view.addSubview(supplierLabel)
+        self.view.addSubview(scrollView)
+        self.view.addSubview(deleteButton)
+        scrollView.addSubview(stackView)
+        stackView.addArrangedSubview(nameLabel)
+        stackView.addArrangedSubview(descLabel)
+        stackView.addArrangedSubview(priceLabel)
+        stackView.addArrangedSubview(supplierLabel)
         setConstraint()
     }
     private func setConstraint() {
-//        scrollView.snp.makeConstraints { make in
-//            make.top.equalToSuperview().offset(30)
-//            make.leading.equalToSuperview().offset(10)
-//            make.trailing.equalToSuperview().offset(-10)
-//            make.bottom.equalToSuperview()
-//        }
-//        stackView.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
-//        }
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+
+        }
+        stackView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(30)
+            make.width.equalTo(view.snp.width).offset(-20)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
         nameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(100)
-            make.width.equalTo(view.safeAreaLayoutGuide.snp.width)
+            make.top.equalToSuperview()
+            make.width.equalToSuperview()
         }
         descLabel.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.bottom)
-            make.width.equalTo(view.safeAreaLayoutGuide.snp.width)
+            make.width.equalTo(view.snp.width).offset(-20)
         }
         priceLabel.snp.makeConstraints { make in
             make.top.equalTo(descLabel.snp.bottom)
-            make.width.equalTo(view.safeAreaLayoutGuide.snp.width)
+            make.width.equalToSuperview()
 
         }
         supplierLabel.snp.makeConstraints { make in
             make.top.equalTo(priceLabel.snp.bottom)
-            make.width.equalTo(view.safeAreaLayoutGuide.snp.width)
+            make.width.equalToSuperview()
+
         }
-        
+        deleteButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-10)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-10)
+            make.width.height.equalTo(60)
+        }
     }
 }
