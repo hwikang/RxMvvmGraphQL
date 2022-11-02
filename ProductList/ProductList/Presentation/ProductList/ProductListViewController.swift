@@ -31,13 +31,14 @@ final class ProductListViewController: UIViewController, UITableViewDelegate, Pr
         button.backgroundColor = .systemBlue
         return button
     }()
-    
+    private var loadingView: UIActivityIndicatorView?
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUI()
         bindViewModel()
         bindView()
+        loadingView = LoadingIndicator.showLoading(parentView: self.view)
     }
     
     private func bindViewModel() {
@@ -45,12 +46,14 @@ final class ProductListViewController: UIViewController, UITableViewDelegate, Pr
         let output = viewModel.transform(input: input)
         
         output.productList
+            
             .catch({ error in
                 self.present(Dialog.getDialog(title: "에러", message: error.localizedDescription), animated: true)
                 return Observable.just([])
             })
-            .bind(to: productListTableView.rx.items(cellIdentifier: "ProductListCell", cellType: ProductListTableViewCell.self)) { (_, element, cell) in
+            .bind(to: productListTableView.rx.items(cellIdentifier: "ProductListCell", cellType: ProductListTableViewCell.self)) {[weak self] (_, element, cell) in
                 cell.configure(id: element.id, nameKo: element.nameKo, nameEn: element.nameEn, price: element.price, supplier: element.supplier?.name)
+                self?.loadingView?.removeFromSuperview()
             }
             
             .disposed(by: disposeBag)

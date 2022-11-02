@@ -22,13 +22,16 @@ final class CreatePopupViewController: UIViewController {
         view.backgroundColor = .white
         return view
     }()
-    
+    private var loadingView: UIActivityIndicatorView?
+
     override func viewDidLoad() {
         setUI()
         bindViewModel()
         bindView()
         bindNotification()
         setDismissKeyboardEvent()
+        loadingView = LoadingIndicator.showLoading(parentView: self.view)
+
     }
     
     private func bindViewModel() {
@@ -48,6 +51,7 @@ final class CreatePopupViewController: UIViewController {
                         self?.popup.suppliersSegmentControl.insertSegment(withTitle: itemList[index].name, at: index, animated: true)
                     }
                     self?.popup.suppliersSegmentControl.selectedSegmentIndex = 0
+                    self?.loadingView?.removeFromSuperview()
                 }
                 
             })
