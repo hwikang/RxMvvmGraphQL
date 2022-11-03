@@ -86,7 +86,7 @@ final class ProductViewController: UIViewController, ProductDetailDelegate {
             }.bind { [weak self] deleteDone in
                 if deleteDone {
                     let dialog = Dialog.getDialog(title: "삭제", message: "상품이 삭제 되었습니다.", handler: {
-                        self?.delegate?.onDeleteDone()
+                        self?.delegate?.updateList()
                         self?.navigationController?.popViewController(animated: true)
                     })
                     self?.present(dialog, animated: true)
@@ -96,6 +96,7 @@ final class ProductViewController: UIViewController, ProductDetailDelegate {
     
     func onUpdateDone() {
         self.needUpdateProduct.onNext(true)
+        self.delegate?.updateList()
     }
     
     required init?(coder: NSCoder) {

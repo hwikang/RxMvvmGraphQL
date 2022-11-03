@@ -8,6 +8,5 @@
 import Foundation
 
 protocol ProductListDelegate: AnyObject {
-    func onCreateDone()
-    func onDeleteDone()
+    func updateList()
 }

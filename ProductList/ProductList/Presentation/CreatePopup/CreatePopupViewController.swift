@@ -59,7 +59,7 @@ final class CreatePopupViewController: UIViewController {
             }
             .bind(onNext: {[weak self] isDone in
             if isDone {
-                self?.delegate?.onCreateDone()
+                self?.delegate?.updateList()
                 self?.dismiss(animated: true)
             }
         }).disposed(by: disposeBag)

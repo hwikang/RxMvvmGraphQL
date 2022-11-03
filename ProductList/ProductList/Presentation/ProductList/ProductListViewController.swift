@@ -75,11 +75,7 @@ final class ProductListViewController: UIViewController, UITableViewDelegate, Pr
         }.disposed(by: disposeBag)
     }
     
-    func onCreateDone() {
-        needUpdateList.onNext(true)
-    }
-    
-    func onDeleteDone() {
+    func updateList() {
         needUpdateList.onNext(true)
     }
 }
