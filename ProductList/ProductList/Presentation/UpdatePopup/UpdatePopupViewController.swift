@@ -119,10 +119,6 @@ final class UpdatePopupViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    private func hide() {
-        self.dismiss(animated: true)
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

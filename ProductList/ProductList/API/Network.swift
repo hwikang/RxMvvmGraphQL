@@ -12,11 +12,13 @@ final class Network {
     static let shared = Network()
     
     private(set) lazy var apollo: ApolloClient = {
-        guard let url = URL(string: "https://test.recruit.croquis.com:28501"),
-        let uuid = UIDevice.current.identifierForVendor?.uuidString else { fatalError("Create Apollo Client Error")}
+        
+        guard let serverUrl = Bundle.main.object(forInfoDictionaryKey: "SERVER_URL") as? String else { fatalError("Server URL Error")}
+        guard let url = URL(string: "https://" + serverUrl),
+              let uuid = UIDevice.current.identifierForVendor?.uuidString else { fatalError("Create Apollo Client Error")}
 
         let store = ApolloStore()
-
+        
         let interceptorProvider = NetworkInterceptorsProvider(
                    interceptors: [UUIDInterceptor(uuid: uuid)],
                    store: store

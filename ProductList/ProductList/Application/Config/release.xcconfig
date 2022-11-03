@@ -1,0 +1,12 @@
+//
+//  release.xcconfig
+//  ProductList
+//
+//  Created by 슈퍼 on 2022/11/03.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+#include "Pods/Target Support Files/Pods-ProductList/Pods-ProductList.release.xcconfig"
+
+SERVER_URL = test.recruit.croquis.com:28501

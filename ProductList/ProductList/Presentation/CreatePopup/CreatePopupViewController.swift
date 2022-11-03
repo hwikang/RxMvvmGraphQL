@@ -84,7 +84,7 @@ final class CreatePopupViewController: UIViewController {
         }.disposed(by: disposeBag)
         
         popup.closeButton.rx.tap.bind {[weak self] in
-            self?.hide()
+            self?.dismiss(animated: true)
         }.disposed(by: disposeBag)
         
     }
@@ -112,10 +112,6 @@ final class CreatePopupViewController: UIViewController {
     
     @objc private func dismissKeyboard() {
         self.view.endEditing(true)
-    }
-    
-    private func hide() {
-        self.dismiss(animated: true)
     }
     
 }
