@@ -5,7 +5,6 @@
 //  Created by 슈퍼 on 2022/11/02.
 //
 
-
 import UIKit
 import RxSwift
 import RxRelay
@@ -88,11 +87,11 @@ final class UpdatePopupViewController: UIViewController {
     
     private func isValidText(priceText: String, nameKoText: String, nameEnText: String, descKoText: String, descEnText: String) -> Bool {
         if Validator.isEmpty(nameKoText) {
-            self.present(Dialog.getDialog(title: "입력", message: "한국어 이름을 입력해주세요."), animated: true)
+            self.present(Dialog.getDialog(title: "입력", message: "한국어 상품명을 입력해주세요."), animated: true)
             return false
         }
         if Validator.isEmpty(nameEnText) {
-            self.present(Dialog.getDialog(title: "입력", message: "영어 이름을 입력해주세요."), animated: true)
+            self.present(Dialog.getDialog(title: "입력", message: "영어 상품명을 입력해주세요."), animated: true)
             return false
         }
         if Validator.isEmpty(descKoText) {

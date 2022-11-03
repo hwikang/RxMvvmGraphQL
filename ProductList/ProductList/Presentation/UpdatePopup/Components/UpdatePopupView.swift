@@ -143,7 +143,6 @@ final class UpdatePopupView: UIView {
             make.trailing.equalToSuperview().offset(-10)
             make.height.equalTo(60)
         }
-        
         priceLabel.snp.makeConstraints { make in
             make.top.equalTo(descEnTextView.snp.bottom).offset(10)
             make.leading.equalToSuperview().offset(10)
@@ -153,7 +152,6 @@ final class UpdatePopupView: UIView {
             make.leading.equalToSuperview().offset(10)
             make.trailing.equalToSuperview().offset(-10)
         }
-        
         createButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-20)

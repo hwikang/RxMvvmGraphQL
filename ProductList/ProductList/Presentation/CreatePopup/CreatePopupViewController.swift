@@ -87,7 +87,6 @@ final class CreatePopupViewController: UIViewController {
             self?.hide()
         }.disposed(by: disposeBag)
         
-       
     }
     
     private func isValidText(priceText: String, nameText: String) -> Bool {

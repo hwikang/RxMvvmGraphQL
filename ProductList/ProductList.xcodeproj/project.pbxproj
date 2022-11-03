@@ -43,6 +43,7 @@
 		BF98B422290D1CA00058D155 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98B421290D1CA00058D155 /* API.swift */; };
 		BFB45B6B291251FC00F473B0 /* UpdateProductMutation.graphql in Sources */ = {isa = PBXBuildFile; fileRef = BFB45B6A291251FC00F473B0 /* UpdateProductMutation.graphql */; };
 		BFB45B6D2912583F00F473B0 /* ProductDetailDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB45B6C2912583F00F473B0 /* ProductDetailDelegate.swift */; };
+		BFB45B6F2913650E00F473B0 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB45B6E2913650E00F473B0 /* ProductDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,7 @@
 		BF98B421290D1CA00058D155 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		BFB45B6A291251FC00F473B0 /* UpdateProductMutation.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UpdateProductMutation.graphql; sourceTree = "<group>"; };
 		BFB45B6C2912583F00F473B0 /* ProductDetailDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailDelegate.swift; sourceTree = "<group>"; };
+		BFB45B6E2913650E00F473B0 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
 		FA6FFAFCB617D691C2A15254 /* Pods_ProductListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProductListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -275,6 +277,7 @@
 		BF7FADC42910F992004109A4 /* ProductDetail */ = {
 			isa = PBXGroup;
 			children = (
+				BFB45B702913654200F473B0 /* Components */,
 				BF7FADC52910F9A1004109A4 /* ProductViewController.swift */,
 				BF7FADC82910FF48004109A4 /* ProductViewModel.swift */,
 			);
@@ -346,6 +349,14 @@
 				BF98B41F290D1C300058D155 /* ProductDataSource.swift */,
 			);
 			path = DataSource;
+			sourceTree = "<group>";
+		};
+		BFB45B702913654200F473B0 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				BFB45B6E2913650E00F473B0 /* ProductDetailView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		D33170586917E9D3EE084E75 /* Pods */ = {
@@ -660,6 +671,7 @@
 				7B01565C290BA80A00E00177 /* ProductListViewController.swift in Sources */,
 				BF7FADCE29121D0E004109A4 /* ProductListDelegate.swift in Sources */,
 				7B015658290BA80A00E00177 /* AppDelegate.swift in Sources */,
+				BFB45B6F2913650E00F473B0 /* ProductDetailView.swift in Sources */,
 				BF7FADD529123669004109A4 /* UpdatePopupView.swift in Sources */,
 				BF98B422290D1CA00058D155 /* API.swift in Sources */,
 				7B01565A290BA80A00E00177 /* SceneDelegate.swift in Sources */,

@@ -55,8 +55,5 @@ final class ProductDataSourceImpl: ProductDataSource {
             callBack(result)
         }
     }
-    
-    
+
 }
-
-

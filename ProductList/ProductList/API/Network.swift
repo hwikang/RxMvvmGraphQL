@@ -15,11 +15,6 @@ final class Network {
         guard let url = URL(string: "https://test.recruit.croquis.com:28501"),
         let uuid = UIDevice.current.identifierForVendor?.uuidString else { fatalError("Create Apollo Client Error")}
 
-        let configuration = URLSessionConfiguration.default
-        let uuidHeader = ["Croquis-UUID": uuid]
-        configuration.httpAdditionalHeaders = uuidHeader
-        print("uuidHeader \(uuidHeader)")
-        
         let store = ApolloStore()
 
         let interceptorProvider = NetworkInterceptorsProvider(
@@ -27,10 +22,12 @@ final class Network {
                    store: store
                )
        let networkTransport = RequestChainNetworkTransport(interceptorProvider: interceptorProvider, endpointURL: url)
+        
         return ApolloClient(networkTransport: networkTransport, store: store)
 
     }()
 }
+
 final class UUIDInterceptor: ApolloInterceptor {
   
     let uuid: String
