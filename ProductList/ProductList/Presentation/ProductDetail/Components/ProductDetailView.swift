@@ -18,13 +18,50 @@ final class ProductDetailView: UIView {
     private let stackView: UIStackView = {
        let stackView = UIStackView()
         stackView.axis = .vertical
+        stackView.spacing = 8
         return stackView
     }()
-    private let nameLabel: UILabel = {
+    
+    private let nameKoTitle: UILabel = {
+       let label = UILabel()
+        label.text = "한국어 상품명"
+        return label
+    }()
+    private let nameEnTitle: UILabel = {
+       let label = UILabel()
+        label.text = "영어 상품명"
+        return label
+    }()
+    private let descKoTitle: UILabel = {
+       let label = UILabel()
+        label.text = "한국어 상품 요약 설명"
+        return label
+    }()
+    private let descEnTitle: UILabel = {
+       let label = UILabel()
+        label.text = "영어 상품 요약 설명"
+        return label
+    }()
+    private let priceTitle: UILabel = {
+       let label = UILabel()
+        label.text = "가격"
+        return label
+    }()
+    private let nameKoLabel: UILabel = {
         let label = UILabel()
         return label
     }()
-    private let descLabel: UILabel = {
+    private let nameEnLabel: UILabel = {
+        let label = UILabel()
+        return label
+    }()
+    private let descKoLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        return label
+    }()
+    private let descEnLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -44,17 +81,27 @@ final class ProductDetailView: UIView {
         setUI()
     }
     public func setLabelText(product: ProductQuery.Data.Product) {
-        nameLabel.text = "\(product.nameKo ?? "") \(product.nameEn ?? "")"
-        descLabel.text = "\(product.descriptionKo ?? "") \(product.descriptionEn ?? "")"
+        nameKoLabel.text = product.nameKo ?? ""
+        descKoLabel.text = product.descriptionKo ?? ""
+        nameEnLabel.text = product.nameKo ?? ""
+        descEnLabel.text = product.descriptionEn ?? ""
         priceLabel.text = "\(product.price ?? 0) 원"
-        supplierLabel.text = "\(product.supplier?.name ?? "")"
+        supplierLabel.text = product.supplier?.name ?? ""
     }
     
     private func setUI() {
         self.addSubview(scrollView)
         scrollView.addSubview(stackView)
-        stackView.addArrangedSubview(nameLabel)
-        stackView.addArrangedSubview(descLabel)
+        stackView.addArrangedSubview(nameKoTitle)
+        stackView.addArrangedSubview(nameKoLabel)
+        stackView.addArrangedSubview(nameEnTitle)
+        stackView.addArrangedSubview(nameEnLabel)
+        stackView.addArrangedSubview(descKoTitle)
+        stackView.addArrangedSubview(descKoLabel)
+        stackView.addArrangedSubview(descEnTitle)
+        stackView.addArrangedSubview(descEnLabel)
+        stackView.addArrangedSubview(priceTitle)
+
         stackView.addArrangedSubview(priceLabel)
         stackView.addArrangedSubview(supplierLabel)
 
@@ -71,24 +118,6 @@ final class ProductDetailView: UIView {
             make.width.equalTo(self.snp.width).offset(-20)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
-        }
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.width.equalToSuperview()
-        }
-        descLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom)
-            make.width.equalTo(self.snp.width).offset(-20)
-        }
-        priceLabel.snp.makeConstraints { make in
-            make.top.equalTo(descLabel.snp.bottom)
-            make.width.equalToSuperview()
-
-        }
-        supplierLabel.snp.makeConstraints { make in
-            make.top.equalTo(priceLabel.snp.bottom)
-            make.width.equalToSuperview()
-
         }
     }
     
