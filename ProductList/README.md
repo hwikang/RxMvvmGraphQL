@@ -113,3 +113,62 @@ output.createDone
     }
 }).disposed(by: disposeBag)
 ```
+
+### Input & Output
+
+```jsx
+final class ProductListViewModel {
+
+    private let disposeBag = DisposeBag()
+    private let dataSource: ProductDataSource
+    private let productList = PublishSubject<[ProductListQuery.Data.ProductList.ItemList]>()
+    
+    init(dataSource: ProductDataSource) {
+        self.dataSource = dataSource
+        fetchProductList()
+    }
+    struct Input {
+        let needUpdateList: Observable<Bool>
+    }
+    struct Output {
+        let productList: Observable<[ProductListQuery.Data.ProductList.ItemList]>
+    }
+    
+    func transform(input: Input) -> Output {
+        input.needUpdateList.bind {[weak self] needUpdate in
+            if needUpdate {self?.fetchProductList()}
+        }.disposed(by: disposeBag)
+        return Output(productList: productList.asObservable())
+    }
+}
+```
+
+ViewController ↔ ViewModel 간 협업은 Input Output 을 통합니다.
+
+Input은 ViewController → ViewModel로의 이벤트
+
+Output은 ViewModel→ ViewController 로 이벤트들 입니다.
+
+ViewController로 부터 받아온 input 은 transform() 함수에
+
+바인딩 되어 사용하며 ViewController 에서는 받아온 output을 
+
+bindViewModel() 함수에 바인딩 하여 사용합니다.
+
+```jsx
+private func bindViewModel() {
+    let input = ProductListViewModel.Input(needUpdateList: needUpdateList.asObservable())
+    let output = viewModel.transform(input: input)
+    
+    output.productList
+        .catch({ error in
+            self.present(Dialog.getDialog(title: "에러", message: error.localizedDescription), animated: true)
+            return Observable.just([])
+        })
+        .bind(to: productListTableView.rx.items(cellIdentifier: "ProductListCell", cellType: ProductListTableViewCell.self)) {[weak self] (_, element, cell) in
+            cell.configure(id: element.id, nameKo: element.nameKo, nameEn: element.nameEn, price: element.price, supplier: element.supplier?.name)
+            self?.loadingView?.removeFromSuperview()
+        }
+        .disposed(by: disposeBag)
+}
+```
