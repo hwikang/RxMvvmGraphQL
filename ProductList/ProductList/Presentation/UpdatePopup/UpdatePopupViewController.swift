@@ -68,6 +68,9 @@ final class UpdatePopupViewController: UIViewController {
             self.updateProductInput.onNext(input)
         }.disposed(by: disposeBag)
            
+        popup.closeButton.rx.tap.bind { [weak self] in
+            self?.dismiss(animated: true)
+        }.disposed(by: disposeBag)
     }
     
     private func bindNotification() {

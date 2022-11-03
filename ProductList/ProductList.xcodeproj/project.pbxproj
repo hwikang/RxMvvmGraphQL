@@ -113,6 +113,7 @@
 		BFB45B6E2913650E00F473B0 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
 		BFB45B722913803900F473B0 /* debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = debug.xcconfig; sourceTree = "<group>"; };
 		BFB45B742913804D00F473B0 /* release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = release.xcconfig; sourceTree = "<group>"; };
+		BFB45B7529138B7800F473B0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		FA6FFAFCB617D691C2A15254 /* Pods_ProductListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProductListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -148,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				BF98B41B290D13FC0058D155 /* .swiftlint.yml */,
+				BFB45B7529138B7800F473B0 /* README.md */,
 				7B015656290BA80A00E00177 /* ProductList */,
 				7B01566D290BA80C00E00177 /* ProductListTests */,
 				7B015677290BA80C00E00177 /* ProductListUITests */,
