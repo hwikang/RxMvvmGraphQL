@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import RxRelay
-import Apollo
 
 final class CreatePopupViewController: UIViewController {
     private let disposeBag = DisposeBag()

@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import Apollo
+
 final class CreatePopupViewModel {
     private let disposeBag = DisposeBag()
     private let dataSource: ProductDataSource

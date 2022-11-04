@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
-import Apollo
 
 final class ProductListViewController: UIViewController, UITableViewDelegate, ProductListDelegate {
    
