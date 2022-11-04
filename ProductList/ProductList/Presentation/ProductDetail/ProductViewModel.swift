@@ -70,12 +70,10 @@ final class ProductViewModel {
                 } else {
                     self?.deleteDone.onNext(true)
                 }
-               
             case .failure(let error):
                 self?.deleteDone.onError(error)
 
             }
         }
     }
-    
 }

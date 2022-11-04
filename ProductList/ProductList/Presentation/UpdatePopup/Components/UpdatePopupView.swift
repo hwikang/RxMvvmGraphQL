@@ -71,7 +71,6 @@ final class UpdatePopupView: UIView {
         return textField
     }()
     
-    
     public let createButton: UIButton = {
         let button = UIButton()
         button.setTitle("생성", for: .normal)
