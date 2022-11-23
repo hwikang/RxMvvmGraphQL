@@ -5,7 +5,7 @@ Application/Config 폴더안 configuration 파일에
 url이 정의 되어있으며 이를 사용하고 있습니다.
 
 ```jsx
-SERVER_URL = test.recruit.croquis.com:28501
+SERVER_URL = API주소
 ```
 
 헤더 정보는 interceptor 통해 담고있으며 
